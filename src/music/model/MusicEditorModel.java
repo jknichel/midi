@@ -60,7 +60,7 @@ public class MusicEditorModel implements IMusicEditorModel {
 
     state += getEditorStateNoteRow(lengthToPadNotes);
 
-    for (int i = 0; i < song.getLength(); i++) {
+    for (int i = 0; i <= song.getLength(); i++) {
       state += String.format("%1$" + String.valueOf(lengthToPadNotes) + "d", i);
       state += song.beatRowNotesToString(i) + "\n";
     }
