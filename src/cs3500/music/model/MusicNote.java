@@ -1,4 +1,4 @@
-package music.model;
+package cs3500.music.model;
 
 /**
  * Abstract class MusicNote to represent a single note with a pitch and an octave. Concrete

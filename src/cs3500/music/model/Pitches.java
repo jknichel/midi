@@ -1,4 +1,4 @@
-package music.model;
+package cs3500.music.model;
 
 /**
  * Enumeration for each possible pitch.

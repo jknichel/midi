@@ -1,4 +1,4 @@
-package music.model;
+package cs3500.music.model;
 
 /**
  * Concrete implementation of MusicNote for the Music Editor. Object that represents a music note

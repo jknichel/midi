@@ -1,4 +1,4 @@
-package music.model;
+package cs3500.music.model;
 
 /**
  * An implementation of the MusicEditorModel interface. It is a model to represent a music editor.
