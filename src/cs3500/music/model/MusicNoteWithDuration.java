@@ -1,5 +1,7 @@
 package cs3500.music.model;
 
+// This is a test to see if I did this right... bear with me for a minute here
+
 /**
  * Concrete implementation of MusicNote for the Music Editor. Object that represents a music note
  * with a specific start beat and beat duration. The ending beat is determined as well.
