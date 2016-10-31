@@ -62,7 +62,7 @@ public class MusicNoteWithDurationTest {
   }
 
   @Test
-  public void testShorten1() {
+  public void testShorten() {
     MusicNoteWithDuration n = new MusicNoteWithDuration(Pitches.C, 4, 6, 8);
     n.shorten(4);
 
@@ -71,13 +71,13 @@ public class MusicNoteWithDurationTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testShorten2() {
+  public void testShortenIAE() {
     MusicNoteWithDuration n = new MusicNoteWithDuration(Pitches.C, 4, 6, 8);
     n.shorten(8);
   }
 
   @Test
-  public void testExpedite1() {
+  public void testExpedite() {
     MusicNoteWithDuration n = new MusicNoteWithDuration(Pitches.C, 4, 6, 8);
     n.expedite(4);
 
@@ -86,7 +86,7 @@ public class MusicNoteWithDurationTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testExpedite2() {
+  public void testExpediteIAE() {
     MusicNoteWithDuration n = new MusicNoteWithDuration(Pitches.C, 4, 6, 8);
     n.expedite(7);
   }
