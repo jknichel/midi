@@ -13,6 +13,42 @@ import static org.junit.Assert.assertEquals;
  */
 public class SongTest {
   @Test
+  public void testCombineConsec() {
+    Song a = new Song();
+
+    a.addNote(new MusicNoteWithDuration(Pitches.C_SHARP, 4, 0, 5));
+    a.addNote(new MusicNoteWithDuration(Pitches.D, 5, 2, 6));
+
+    Song b = new Song();
+
+    b.addNote(new MusicNoteWithDuration(Pitches.E, 3, 1, 4));
+    b.addNote(new MusicNoteWithDuration(Pitches.F_SHARP, 7, 0, 7));
+
+    a.combineConsec(b);
+
+    assertEquals(a.getNoteLists().get(0).getNotes().get(0).getStartBeat(),
+            8);
+  }
+
+  @Test
+  public void testCombineSimul() {
+    Song a = new Song();
+
+    a.addNote(new MusicNoteWithDuration(Pitches.C_SHARP, 4, 0, 5));
+    a.addNote(new MusicNoteWithDuration(Pitches.D, 5, 2, 6));
+
+    Song b = new Song();
+
+    b.addNote(new MusicNoteWithDuration(Pitches.E, 3, 1, 4));
+    b.addNote(new MusicNoteWithDuration(Pitches.F_SHARP, 7, 0, 7));
+
+    a.combineSimul(b);
+
+    assertEquals(a.getNoteLists().get(0).getNotes().get(0).toString(),
+            "E3");
+  }
+
+  @Test
   public void addAndRemoveNotesAndGetLengthTest() {
     Song song = new Song();
 

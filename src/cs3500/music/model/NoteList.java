@@ -178,4 +178,12 @@ public class NoteList {
     }
     return false;
   }
+
+  /**
+   * Gets the notes in a noteList.
+   * @return the notes of a noteList in an array
+   */
+  public ArrayList<MusicNoteWithDuration> getNotes() {
+    return this.notes;
+  }
 }

@@ -51,4 +51,52 @@ public class MusicNoteWithDurationTest {
   public void testZeroDurationConstructorInputs() {
     new MusicNoteWithDuration(Pitches.C_SHARP, 8, 5, 0);
   }
+
+  @Test
+  public void testLengthen() {
+    MusicNoteWithDuration n = new MusicNoteWithDuration(Pitches.C, 4, 6, 8);
+    n.lengthen(4);
+
+    assertEquals(n.getDuration(),
+            12);
+  }
+
+  @Test
+  public void testShorten1() {
+    MusicNoteWithDuration n = new MusicNoteWithDuration(Pitches.C, 4, 6, 8);
+    n.shorten(4);
+
+    assertEquals(n.getDuration(),
+            4);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testShorten2() {
+    MusicNoteWithDuration n = new MusicNoteWithDuration(Pitches.C, 4, 6, 8);
+    n.shorten(8);
+  }
+
+  @Test
+  public void testExpedite1() {
+    MusicNoteWithDuration n = new MusicNoteWithDuration(Pitches.C, 4, 6, 8);
+    n.expedite(4);
+
+    assertEquals(n.getStartBeat(),
+            2);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testExpedite2() {
+    MusicNoteWithDuration n = new MusicNoteWithDuration(Pitches.C, 4, 6, 8);
+    n.expedite(7);
+  }
+
+  @Test
+  public void testDelay() {
+    MusicNoteWithDuration n = new MusicNoteWithDuration(Pitches.C, 4, 6, 8);
+    n.delay(4);
+
+    assertEquals(n.getStartBeat(),
+            10);
+  }
 }

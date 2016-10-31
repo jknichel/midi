@@ -53,6 +53,45 @@ public class MusicNoteWithDuration extends MusicNote {
     this.endBeat = this.startBeat + this.duration - 1;
   }
 
+  /**
+   * Lengthens the duration of a MusicNoteWithDuration.
+   * @param t the amount of time to lengthen the note by.
+   */
+  public void lengthen(int t) {
+    this.duration += t;
+  }
+
+  /**
+   * Shortens the duration of a MusicoteWithDuration.
+   * @param t the amount of time to shorten the note by
+   * @throws IllegalArgumentException if the user attempts to shorten the note by an amount
+   * greater than the duration of the note
+   */
+  public void shorten(int t) throws IllegalArgumentException {
+    if (this.duration - t < 1) {
+      throw new IllegalArgumentException("Duration of note must be greater than 0");
+    }
+    this.duration -= t;
+  }
+
+  /**
+   * Expedites the arrival of the note in a song.
+   * @param t the amount of time to expedite the note by
+   */
+  public void expedite(int t) throws IllegalArgumentException{
+    if (this.startBeat - t < 0) {
+      throw new IllegalArgumentException("Cannot start note before the initial beat");
+    }
+    this.startBeat -= t;
+  }
+
+  /**
+   * Delays the start time of a MusicNoteWithDuration.
+   * @param t the amount of time to delay the note by
+   */
+  public void delay(int t) {
+    this.startBeat += t;
+  }
 
   /**
    * Getter method for the duration value.

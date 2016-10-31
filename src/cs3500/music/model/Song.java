@@ -107,6 +107,30 @@ public class Song {
   }
 
   /**
+   * Combines two songs to play both of their notes consecutively (one after another).
+   * @param s the song to be played after the given song
+   */
+  public void combineConsec(Song s){
+    int firstSongLength = this.getLength();
+    for (NoteList nl : s.noteLists) {
+      for (MusicNoteWithDuration n : nl.getNotes()) {
+        n.delay(firstSongLength);
+        this.addNote(n);
+      }
+    }
+  }
+
+  /**
+   * Combines this Song with Song s
+   * @param s the song to have its notes added to the given song
+   */
+  public void combineSimul(Song s) {
+    for (NoteList nl : s.noteLists) {
+      nl.getNotes().forEach(this::addNote);
+    }
+  }
+
+  /**
    * Returns a string row of the range of notes present in the song.
    * @return the string representation of the row.
    */
@@ -239,5 +263,13 @@ public class Song {
       currentLength = Math.max(currentLength, list.getLength());
     }
     this.length = currentLength;
+  }
+
+  /**
+   * Returns the noteLists for a song
+   * @return the noteLists for a certain song
+   */
+  public ArrayList<NoteList> getNoteLists() {
+    return this.noteLists;
   }
 }
