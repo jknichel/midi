@@ -1,10 +1,18 @@
 package cs3500.music.model;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * This is the interface for the MusicEditor model.
  */
 public interface IMusicEditorModel {
-
+  /**
+   * Get the number of beats in the song.
+   * @return the value of the last ending beat in the song.
+   */
+  int getLength();
 
   /**
    * Method to add a note to the song in the editor.
@@ -31,5 +39,26 @@ public interface IMusicEditorModel {
    * of columns of notes with markings indicating the beats they're played on.
    * @return string representation of the state of the song.
    */
-  String getMusicEditorState();
+  //String getMusicEditorState();
+
+  /**
+   * Get a list from the lowest to highest note in a song.
+   * This is new from HW05.
+   * @return the list containing all notes in the range of the song.
+   */
+  List<MusicNote> noteRange();
+
+  /**
+   * Return a HashMap mapping a beat to all notes that start on that beat.
+   * This is new from HW05.
+   * @return HashMap mapping a beat to List of notes that start on that beat.
+   */
+  Map<Integer, List<MusicNote>> noteStartingBeats();
+
+  /**
+   * Return a lit of all notes in a song that continue through the given beat.
+   * This is new from HW05.
+   * @return list of notes continuing through the given beat.
+   */
+  Map<Integer, List<MusicNote>> noteContinuationBeats();
 }

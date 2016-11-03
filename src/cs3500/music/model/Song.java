@@ -3,12 +3,15 @@ package cs3500.music.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * An object to represent a song. A song consists of NoteLists which hold all of the notes of the
- * song.
+ * song. It implements the IMusicEditorModel interface.
  */
-public class Song {
+public class Song implements IMusicEditorModel {
   /**
    * A list of the NoteLists containing the component notes of the song.
    */
@@ -34,9 +37,9 @@ public class Song {
    * @param start start beat of note to add to song.
    * @param duration duration in beats of note to add to song.
    */
-  public void addNote(Pitches pitch, int octave, int start, int duration) {
+  public boolean addNote(Pitches pitch, int octave, int start, int duration) {
     MusicNoteWithDuration noteToAdd = new MusicNoteWithDuration(pitch, octave, start, duration);
-    addNote(noteToAdd);
+    return addNote(noteToAdd);
   }
 
   /**
@@ -46,10 +49,10 @@ public class Song {
    * @param start the starting beat of the note in the song.
    * @param duration the duration in beats of the note in the song.
    */
-  public void addNote(MusicNote note, int start, int duration) {
+  public boolean addNote(MusicNote note, int start, int duration) {
     MusicNoteWithDuration noteToAdd = new MusicNoteWithDuration(note.getPitch(), note.getOctave(),
             start, duration);
-    addNote(noteToAdd);
+    return addNote(noteToAdd);
   }
 
   /**
@@ -58,7 +61,7 @@ public class Song {
    * to preserve the correct order.
    * @param note the MusicNoteWithDuration to add to the song.
    */
-  public void addNote(MusicNoteWithDuration note) {
+  public boolean addNote(MusicNoteWithDuration note) {
     Pitches pitch = note.getPitch();
     int octave = note.getOctave();
     int noteListIndex;
@@ -69,10 +72,15 @@ public class Song {
       noteLists.add(new NoteList(note));
       sortNoteListsByPitchAndOctave();
       updateLength();
-      return;
+      return true;
     }
-    noteLists.get(noteListIndex).addNote(note);
+    try {
+      noteLists.get(noteListIndex).addNote(note);
+    } catch (IllegalArgumentException e) {
+      return false;
+    }
     updateLength();
+    return true;
   }
 
   /**
@@ -83,19 +91,20 @@ public class Song {
    * @param start start beat of the note to be removed.
    * @param end end beat of the note to be removed.
    */
-  public void removeNote(Pitches pitch, int octave, int start, int end) {
+  public boolean removeNote(Pitches pitch, int octave, int start, int end) {
     int noteListIndex;
 
     try {
       noteListIndex = findApplicableNoteListIndex(pitch, octave);
     } catch (IllegalArgumentException e) {
-      throw e;
+      return false;
     }
     noteLists.get(noteListIndex).removeNote(start, end);
     if (noteLists.get(noteListIndex).getLength() == 0) {
       noteLists.remove(noteListIndex);
     }
     updateLength();
+    return true;
   }
 
   /**
@@ -108,6 +117,7 @@ public class Song {
 
   /**
    * Combines two songs to play both of their notes consecutively (one after another).
+   * This is new from HW05.
    * @param s the song to be played after the given song
    */
   public void combineConsec(Song s){
@@ -122,6 +132,7 @@ public class Song {
 
   /**
    * Combines this Song with Song s
+   * This is new from HW05.
    * @param s the song to have its notes added to the given song
    */
   public void combineSimul(Song s) {
@@ -130,78 +141,53 @@ public class Song {
     }
   }
 
-  /**
-   * Returns a string row of the range of notes present in the song.
-   * @return the string representation of the row.
-   */
-  public String noteHeaderRowToString() {
-    String headerRow = "";
-
+  @Override
+  public List<MusicNote> noteRange() {
+    List<MusicNote> noteRange = new ArrayList<>();
     MusicNote lowest = lowestNote();
     MusicNote highest = highestNote();
     MusicNote current = lowest;
 
     while ((current.getPitch().getScaleIndex() + (current.getOctave() * 12))
             <= (highest.getPitch().getScaleIndex() + (highest.getOctave() * 12))) {
-      headerRow += centerNoteText(current.toString());
+      noteRange.add(current);
       current = current.nextNote();
     }
-    return headerRow;
+    return noteRange;
   }
 
-  /**
-   * For a given beat, returns a string representation of the notes played on that beat. The method
-   * will go through the the entire range of notes and add either no character, the start of note
-   * character ("X") or the note continuation character ("|").
-   * @param beat the beat row to return.
-   * @return the string representation of that beat's row.
-   */
-  public String beatRowNotesToString(int beat) {
-    String beatRow = "  ";
+  @Override
+  public Map<Integer, List<MusicNote>> noteStartingBeats() {
+    Map<Integer, List<MusicNote>> noteStartingBeats = new HashMap<>();
 
-    MusicNote lowest = lowestNote();
-    MusicNote highest = highestNote();
-    MusicNote current = lowest;
-
-    while ((current.getPitch().getScaleIndex() + (current.getOctave() * 12))
-            <= (highest.getPitch().getScaleIndex() + (highest.getOctave() * 12))) {
+    for (int i = 0; i <= getLength(); i++) {
+      List<MusicNote> startsAtBeat = new ArrayList<>();
       for (NoteList list : noteLists) {
-        if (current.getPitch() == list.getPitch() && current.getOctave() == list.getOctave()) {
-          if (list.hasNoteStartOnBeat(beat)) {
-            beatRow += "X";
-            break;
-          } else if (list.hasNoteContinuationOnBeat(beat)) {
-            beatRow += "|";
-            break;
-          }
+        if (list.hasNoteStartOnBeat(i)) {
+          startsAtBeat.add(list.noteListType);
         }
       }
-      if (beatRow.charAt(beatRow.length() - 1) != ' ') {
-        beatRow += "    ";
-      } else {
-        beatRow += "     ";
-      }
-      current = current.nextNote();
+      noteStartingBeats.put(i, startsAtBeat);
     }
-    return beatRow;
+
+    return noteStartingBeats;
   }
 
-  /**
-   * Helper to create padded strings for the note row. Will fit the MusicNote toString output the
-   * best that it can to center the string within 5 spaces.
-   * @param noteString the MusicNote toString output to center in the space.
-   * @return the center and padded string.
-   */
-  private String centerNoteText(String noteString) {
-    if (noteString.length() == 2) {
-      return "  " + noteString + " ";
-    } else if (noteString.length() == 3) {
-      return " " + noteString + " ";
-    } else if (noteString.length() == 4) {
-      return " " + noteString;
-    } else {
-      return noteString;
+  @Override
+  public Map<Integer, List<MusicNote>> noteContinuationBeats() {
+    HashMap<Integer, List<MusicNote>> noteContinuationBeats = new HashMap<>();
+
+    for (int i = 0; i <= getLength(); i++) {
+      List<MusicNote> continuesAtBeat = new ArrayList<>();
+      for (NoteList list : noteLists) {
+        if (list.hasNoteContinuationOnBeat(i)) {
+          continuesAtBeat.add(list.noteListType);
+        }
+      }
+      noteContinuationBeats.put(i, continuesAtBeat);
     }
+
+    return noteContinuationBeats;
   }
 
   /**
@@ -225,7 +211,7 @@ public class Song {
    * @param pitch target NoteList pitch.
    * @param octave target NoteList octave.
    * @return the integer index of the requested NoteList.
-   * @throws if the requested list doesn't exist.
+   * @throws IllegalArgumentException if the requested list doesn't exist.
    */
   private int findApplicableNoteListIndex(Pitches pitch, int octave) {
     Pitches listPitch;
@@ -263,13 +249,5 @@ public class Song {
       currentLength = Math.max(currentLength, list.getLength());
     }
     this.length = currentLength;
-  }
-
-  /**
-   * Returns the noteLists for a song
-   * @return the noteLists for a certain song
-   */
-  public ArrayList<NoteList> getNoteLists() {
-    return this.noteLists;
   }
 }

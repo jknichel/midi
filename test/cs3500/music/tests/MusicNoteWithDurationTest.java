@@ -57,8 +57,8 @@ public class MusicNoteWithDurationTest {
     MusicNoteWithDuration n = new MusicNoteWithDuration(Pitches.C, 4, 6, 8);
     n.lengthen(4);
 
-    assertEquals(n.getDuration(),
-            12);
+    assertEquals(n.getDuration(), 12);
+    assertEquals(n.getEndBeat(), 17);
   }
 
   @Test
@@ -66,8 +66,8 @@ public class MusicNoteWithDurationTest {
     MusicNoteWithDuration n = new MusicNoteWithDuration(Pitches.C, 4, 6, 8);
     n.shorten(4);
 
-    assertEquals(n.getDuration(),
-            4);
+    assertEquals(n.getDuration(), 4);
+    assertEquals(n.getEndBeat(), 9);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -81,8 +81,8 @@ public class MusicNoteWithDurationTest {
     MusicNoteWithDuration n = new MusicNoteWithDuration(Pitches.C, 4, 6, 8);
     n.expedite(4);
 
-    assertEquals(n.getStartBeat(),
-            2);
+    assertEquals(n.getStartBeat(), 2);
+    assertEquals(n.getEndBeat(), 9);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -96,7 +96,7 @@ public class MusicNoteWithDurationTest {
     MusicNoteWithDuration n = new MusicNoteWithDuration(Pitches.C, 4, 6, 8);
     n.delay(4);
 
-    assertEquals(n.getStartBeat(),
-            10);
+    assertEquals(n.getStartBeat(), 10);
+    assertEquals(n.getEndBeat(), 17);
   }
 }

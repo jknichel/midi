@@ -2,6 +2,10 @@ package cs3500.music.tests;
 
 import org.junit.Test;
 
+import java.util.List;
+import java.util.Map;
+
+import cs3500.music.model.MusicNote;
 import cs3500.music.model.MusicNoteWithDuration;
 import cs3500.music.model.Pitches;
 import cs3500.music.model.Song;
@@ -26,8 +30,10 @@ public class SongTest {
 
     a.combineConsec(b);
 
-    assertEquals(a.getNoteLists().get(0).getNotes().get(0).getStartBeat(),
-            8);
+    // the last note to finish from the first song ends at its beat 7
+    // the last note to finish from song 2 starts at its beat 0 and ends at its beat 6
+    // so last beat first song + last end of second song = 7 + 6 == 13
+    assertEquals(a.getLength(), 13);
   }
 
   @Test
@@ -44,8 +50,9 @@ public class SongTest {
 
     a.combineSimul(b);
 
-    assertEquals(a.getNoteLists().get(0).getNotes().get(0).toString(),
-            "E3");
+    // the last note to finish from either song starts at 2 and lasts for 6 beats
+    // so the length of the song should be 2 + 6 - 1 == 7
+    assertEquals(a.getLength(), 7);
   }
 
   @Test
@@ -65,12 +72,12 @@ public class SongTest {
     assertEquals(song.getLength(), 9);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testAddOverlappingNote() {
     Song song = new Song();
 
-    song.addNote(new MusicNoteWithDuration(Pitches.C, 4, 0, 5));
-    song.addNote(new MusicNoteWithDuration(Pitches.C, 4, 2, 5));
+    assertEquals(song.addNote(new MusicNoteWithDuration(Pitches.C, 4, 0, 5)), true);
+    assertEquals(song.addNote(new MusicNoteWithDuration(Pitches.C, 4, 2, 5)), false);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -82,17 +89,23 @@ public class SongTest {
   }
 
   @Test
-  public void testRowToStringMethods() {
+  public void testNoteBeatsMaps() {
     Song song = new Song();
-
     song.addNote(new MusicNoteWithDuration(Pitches.C, 4, 0, 5));
-    song.addNote(new MusicNoteWithDuration(Pitches.C, 5, 2, 5));
+    song.addNote(new MusicNoteWithDuration(Pitches.G, 5, 2, 5));
 
-    assertEquals(song.noteHeaderRowToString(), "  C4  C#4   D4  D#4   E4   F4  F#4   G4  G#4   "
-            + "A4  A#4   B4   C5 ");
-    assertEquals(song.beatRowNotesToString(0), "  X                                             "
-            + "                   ");
-    assertEquals(song.beatRowNotesToString(2), "  |                                             "
-            + "              X    ");
+    Map<Integer, List<MusicNote>> starts = song.noteStartingBeats();
+    Map<Integer, List<MusicNote>> continues = song.noteContinuationBeats();
+
+    MusicNote startsAt0 = starts.get(0).get(0);
+    MusicNote continuesAt1 = continues.get(1).get(0);
+    MusicNote startsAt2 = starts.get(2).get(0);
+    List<MusicNote> continuesAt4 = continues.get(4);
+
+    assertEquals(startsAt0.getPitch() == Pitches.C, true);
+    assertEquals(continuesAt1.getPitch() == Pitches.C, true);
+    assertEquals(startsAt2.getPitch() == Pitches.G, true);
+    assertEquals(continuesAt4.get(0).getPitch() == Pitches.C, true);
+    assertEquals(continuesAt4.get(1).getPitch() == Pitches.G, true);
   }
 }
