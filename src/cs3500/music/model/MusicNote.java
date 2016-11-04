@@ -17,6 +17,16 @@ public class MusicNote {
   private final int octave;
 
   /**
+   * Holds an int to identify the instrument, to be interpreted by MIDI. Optional.
+   */
+  private int instrument;
+
+  /**
+   * Holds and int to identify the volume of the note. Optional
+   */
+  private int volume;
+
+  /**
    * Default constructor for MusicNote class. Simply creates a note representing "middle C".
    */
   public MusicNote() {
@@ -31,11 +41,30 @@ public class MusicNote {
    * @throws IllegalArgumentException if invalid octave input.
    */
   public MusicNote(Pitches pitch, int octave) {
-    if (octave < 1) {
-      throw new IllegalArgumentException("Octave must be >= 1");
+    if (octave < 0) {
+      throw new IllegalArgumentException("Octave must be >= 0");
     }
     this.pitch = pitch;
     this.octave = octave;
+  }
+
+  /**
+   * Constructor for the MusicNote object. Takes in the pitch and octave and assigns the fields.
+   * This one also creates the notes with the option instrument and volume fields.
+   * This is new from HW05.
+   * @param pitch the pitch of the note to create.
+   * @param octave the octave of the note to create.
+   * @param instrument the instrument of the note to create.
+   * @param volume the volume of the note to create.
+   */
+  public MusicNote(Pitches pitch, int octave, int instrument, int volume) {
+    if (octave < 0) {
+      throw new IllegalArgumentException("Octave must be >= 0");
+    }
+    this.pitch = pitch;
+    this.octave = octave;
+    this.instrument = instrument;
+    this.volume = volume;
   }
 
   /**

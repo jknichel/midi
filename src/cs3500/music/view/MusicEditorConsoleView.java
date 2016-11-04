@@ -1,6 +1,7 @@
 package cs3500.music.view;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +50,13 @@ public class MusicEditorConsoleView implements IMusicEditorView {
 
   private String beatRowToString(List<MusicNote> noteRange, List<MusicNote> noteStarts,
                                  List<MusicNote> noteContinues) {
+    if (noteStarts == null) {
+      noteStarts = new ArrayList<>();
+    }
+    if (noteContinues == null) {
+      noteContinues = new ArrayList<>();
+    }
+
     String beatRow = "";
 
     for (MusicNote note : noteRange) {

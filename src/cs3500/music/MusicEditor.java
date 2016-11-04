@@ -14,9 +14,9 @@ import cs3500.music.view.MusicEditorConsoleView;
 public class MusicEditor {
   public static void main(String[] args) {
     IMusicEditorModel model = new Song();
-    model.addNote(Pitches.C, 4, 0, 11);
-    model.addNote(Pitches.D_SHARP, 4, 0, 5);
-    model.addNote(Pitches.C, 6, 5, 3);
+    model.addNote(0, 10, 1, Pitches.C, 4, 10);
+    model.addNote(0, 4, 1, Pitches.D_SHARP, 4, 10);
+    model.addNote(5, 7, 1, Pitches.C, 6, 10);
     IMusicEditorView view = new MusicEditorConsoleView();
     IMusicEditorController controller = new MusicEditorController(model, view);
     controller.go();
