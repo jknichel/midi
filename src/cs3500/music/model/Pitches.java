@@ -40,6 +40,42 @@ public enum Pitches {
   }
 
   /**
+   * Looks up the pitch associated with a scale index.
+   * @param index the index to get a pitch for.
+   * @return the pitch associated with the scale index.
+   */
+  public Pitches getPitchFromScaleIndex(int index) {
+    switch (index) {
+      case 1:
+        return C;
+      case 2:
+        return C_SHARP;
+      case 3:
+        return D;
+      case 4:
+        return D_SHARP;
+      case 5:
+        return E;
+      case 6:
+        return F;
+      case 7:
+        return F_SHARP;
+      case 8:
+        return G;
+      case 9:
+        return G_SHARP;
+      case 10:
+        return A;
+      case 11:
+        return A_SHARP;
+      case 12:
+        return B;
+      default:
+        throw new IllegalArgumentException("Invalid Index");
+    }
+  }
+
+  /**
    * Returns the next pitch in order.
    * @return the next pitch following the current pitch.
    * @throws IllegalStateException if this is an invalid pitch.

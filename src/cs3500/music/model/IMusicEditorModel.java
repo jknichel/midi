@@ -15,6 +15,12 @@ public interface IMusicEditorModel {
   int getLength();
 
   /**
+   * Get the tempo of the song.
+   * @return the tempo.
+   */
+  int getTempo();
+
+  /**
    * Method to add a note to the song.
    * @param start the start beat of the note in the song.
    * @param end the end beat of the note in the song.

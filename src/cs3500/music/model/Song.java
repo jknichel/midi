@@ -13,8 +13,14 @@ import cs3500.music.util.*;
  * song. It implements the IMusicEditorModel interface.
  */
 public class Song implements IMusicEditorModel {
+  /**
+   * A map from an integer beat to a list of all notes starting on that beat.
+   */
   private final Map<Integer, List<MusicNote>> beatsToNoteStarts = new HashMap<>();
 
+  /**
+   * A map from an integer beat to a list of all notes continuing through that beat.
+   */
   private final Map<Integer, List<MusicNote>> beatsToNoteContinuations = new HashMap<>();
 
   /**
@@ -29,20 +35,48 @@ public class Song implements IMusicEditorModel {
   private int length;
 
   public static final class Builder implements CompositionBuilder<Song> {
+    /**
+     * The tempo of the song being built.
+     */
+    private int tempo;
+
+    /**
+     * The notes of the song to be built.
+     */
+    private List<Map<String, Integer>> notes = new ArrayList<>();
 
     @Override
     public Song build() {
-      return null;
+      Song song = new Song(this.tempo);
+      for (Map<String, Integer> noteInfo : notes) {
+        Pitches pitch = Pitches.C;
+        int pitchIndex = (noteInfo.get("pitch") % 12) + 1;
+        pitch = pitch.getPitchFromScaleIndex(pitchIndex);
+        int octave = (noteInfo.get("pitch") - pitchIndex - 1) / 12;
+        song.addNote(noteInfo.get("start"), noteInfo.get("end"), noteInfo.get("instrument"),
+                pitch, octave, noteInfo.get("volume"));
+      }
+      return song;
     }
 
     @Override
     public CompositionBuilder<Song> setTempo(int tempo) {
-      return null;
+      this.tempo = tempo;
+      return this;
     }
 
     @Override
     public CompositionBuilder<Song> addNote(int start, int end, int instrument, int pitch, int volume) {
-      return null;
+      Map<String, Integer> noteInfo = new HashMap<>();
+
+      noteInfo.put("start", start);
+      noteInfo.put("end", end);
+      noteInfo.put("instrument", instrument);
+      noteInfo.put("pitch", pitch);
+      noteInfo.put("volume", volume);
+      notes.add(noteInfo);
+
+      return this;
     }
   }
 
@@ -51,6 +85,16 @@ public class Song implements IMusicEditorModel {
    */
   public Song() {
     this.length = 0;
+    this.tempo = 0;
+  }
+
+  /**
+   * Constructor with tempo, sets the tempo of the song to the passed value.
+   * @param tempo the tempo of the song to be created.
+   */
+  public Song(int tempo) {
+    this.length = 0;
+    this.tempo = tempo;
   }
 
   @Override
@@ -83,12 +127,14 @@ public class Song implements IMusicEditorModel {
     updateLength();
   }
 
-  /**
-   * Getter for the length of the song.
-   * @return length of the song in beats.
-   */
+  @Override
   public int getLength() {
     return length;
+  }
+
+  @Override
+  public int getTempo() {
+    return tempo;
   }
 
   /**
