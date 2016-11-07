@@ -101,7 +101,8 @@ public class Song implements IMusicEditorModel {
   public void addNote(int start, int end, int instrument, Pitches pitch, int octave,
                          int volume) {
     List<MusicNote> tempList;
-    MusicNote noteToAdd = new MusicNote(pitch, octave, instrument, volume);
+    int duration = end - start + 1;
+    MusicNote noteToAdd = new MusicNote(pitch, octave, instrument, volume, duration);
     if (beatsToNoteStarts.containsKey(start)) {
       tempList = beatsToNoteStarts.get(start);
       tempList.add(noteToAdd);

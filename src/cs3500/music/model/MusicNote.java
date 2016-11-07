@@ -27,6 +27,11 @@ public class MusicNote {
   private int volume;
 
   /**
+   * Holds the totalDuration the note continues on for.
+   */
+  private int totalDuration;
+
+  /**
    * Default constructor for MusicNote class. Simply creates a note representing "middle C".
    */
   public MusicNote() {
@@ -57,7 +62,7 @@ public class MusicNote {
    * @param instrument the instrument of the note to create.
    * @param volume the volume of the note to create.
    */
-  public MusicNote(Pitches pitch, int octave, int instrument, int volume) {
+  public MusicNote(Pitches pitch, int octave, int instrument, int volume, int duration) {
     if (octave < 0) {
       throw new IllegalArgumentException("Octave must be >= 0");
     }
@@ -65,6 +70,7 @@ public class MusicNote {
     this.octave = octave;
     this.instrument = instrument;
     this.volume = volume;
+    this.totalDuration = duration;
   }
 
   /**
@@ -81,6 +87,14 @@ public class MusicNote {
    */
   public int getOctave() {
     return octave;
+  }
+
+  /**
+   * Simple getter for the totalDuration.
+   * @return number of beats the note is played held for from this point.
+   */
+  public int getTotalDuration() {
+    return totalDuration;
   }
 
   public String toString() {
