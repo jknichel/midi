@@ -8,6 +8,8 @@ import java.util.Map;
 import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.model.MusicNote;
 
+// thread.sleep(3);
+
 /**
  * A console view for a IMusicEditorModel.
  */
