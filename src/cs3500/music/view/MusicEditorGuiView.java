@@ -50,7 +50,7 @@ public class MusicEditorGuiView extends JPanel implements IMusicEditorView {
           JLabel beat = new JLabel(Integer.toString(i));
           beats.add(beat);
       } else {
-        beats.add(Box.createHorizontalStrut(310));
+        beats.add(Box.createHorizontalStrut(309));
         JLabel beat = new JLabel(Integer.toString(i));
         beats.add(beat);
       }

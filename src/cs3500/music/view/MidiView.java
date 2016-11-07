@@ -26,6 +26,8 @@ public class MidiView implements IMusicEditorView {
    */
   int tempo;
 
+  public StringBuilder log = new StringBuilder("");
+
   @Override
   public void initializeView(int tempo) {
     this.tempo = tempo;
@@ -73,6 +75,7 @@ public class MidiView implements IMusicEditorView {
     Transmitter seqTrans;
     Synthesizer synth;
     Receiver synthRcvr;
+
     try {
       seq = MidiSystem.getSequencer();
       seqTrans = seq.getTransmitter();
@@ -112,7 +115,7 @@ public class MidiView implements IMusicEditorView {
     } catch (InvalidMidiDataException e) {}
   }
 
-  private void playNote(int beat, MusicNote note, Receiver receiver) {
+  public void playNote(int beat, MusicNote note, Receiver receiver) {
     ShortMessage onMsg = new ShortMessage();
     ShortMessage offMsg = new ShortMessage();
 

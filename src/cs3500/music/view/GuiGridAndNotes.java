@@ -47,9 +47,10 @@ public class GuiGridAndNotes extends JPanel {
     g2.setStroke(new BasicStroke(2));
     int vert = 4;
     for (int i = 0; i <= noteRange.size(); i++) {
-      g2.draw(new Line2D.Float(7, vert, songLength * 22 + 23, vert));
+      g2.draw(new Line2D.Float(7, vert, songLength * 22, vert));
       vert += 20;
     }
+    g2.draw(new Line2D.Float(songLength * 22, 4, songLength * 22, noteRange.size() * 20 + 3));
   }
 
   /**
