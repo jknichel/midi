@@ -123,7 +123,6 @@ public class Song implements IMusicEditorModel {
         beatsToNoteContinuations.put(i, tempList);
       }
     }
-
     updateLength();
   }
 

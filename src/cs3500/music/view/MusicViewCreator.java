@@ -3,6 +3,7 @@ package cs3500.music.view;
 import java.util.List;
 import java.util.Map;
 
+import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.model.MusicNote;
 
 /**
@@ -25,7 +26,7 @@ public class MusicViewCreator implements IMusicEditorView {
       case CONSOLE:
         return new MusicEditorConsoleView();
       case VISUAL:
-        return new MusicEditorVisualView();
+        return new MusicEditorGuiView();
       case MIDI:
         return new MusicEditorMidiView();
       default:
