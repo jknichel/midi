@@ -43,7 +43,7 @@ public class MidiView implements IMusicEditorView {
       }
 
       sequencer.setSequence(sequence);
-      sequencer.setTempoInMPQ(15000);
+      sequencer.setTempoInMPQ(200000);
       sequencer.setLoopCount(0);
 
       sequencer.start();

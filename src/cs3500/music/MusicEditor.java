@@ -21,7 +21,7 @@ import cs3500.music.view.MusicEditorConsoleView;
 public class MusicEditor {
   public static void main(String[] args) {
     String fileName;
-    String viewType = null;
+    String viewType;
 
     if (args.length == 1) {
       fileName = args[0];
@@ -41,20 +41,5 @@ public class MusicEditor {
     } catch (FileNotFoundException e) {
       e.getStackTrace();
     }
-
-    /*
-    IMusicEditorModel model = new Song();
-    model.addNote(4, 32, 1, Pitches.C, 4, 3); // start end instrument pitch octave volume
-    model.addNote(20, 24, 1, Pitches.D, 5, 2);
-    model.addNote(7, 28, 1, Pitches.A_SHARP, 5, 2);
-    model.addNote(0, 12, 1, Pitches.D_SHARP, 4, 2);
-    model.addNote(2, 10, 1, Pitches.B, 4, 2);
-    model.addNote(11, 32, 1, Pitches.F_SHARP, 5, 2);
-    model.addNote(3, 8, 1, Pitches.E, 6, 2);
-
-    IMusicEditorView view = new MusicEditorGuiView();
-    IMusicEditorController controller = new MusicEditorController(model, view);
-    controller.go();
-    */
   }
 }

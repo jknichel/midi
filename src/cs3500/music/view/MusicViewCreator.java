@@ -22,7 +22,7 @@ public class MusicViewCreator implements IMusicEditorView {
       case "visual":
         return new MusicEditorGuiView();
       case "midi":
-        return new MusicEditorMidiView();
+        return new MidiView();
       default:
         break;
     }
