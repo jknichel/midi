@@ -195,7 +195,7 @@ public class Song implements IMusicEditorModel {
    */
   private MusicNote lowestNote() {
     // Start with a random note, compare all others to it to find the lowest in song.
-    MusicNote lowestNote = beatsToNoteStarts.get(0).get(0);
+    MusicNote lowestNote = beatsToNoteStarts.get(beatsToNoteStarts.keySet().toArray()[0]).get(0);
 
     for (List<MusicNote> starts : beatsToNoteStarts.values()) {
       for (MusicNote note : starts) {
@@ -214,7 +214,7 @@ public class Song implements IMusicEditorModel {
    */
   private MusicNote highestNote() {
     // Start with a random note, compare all others to it to find the highest in song.
-    MusicNote highestNote = beatsToNoteStarts.get(0).get(0);
+    MusicNote highestNote = beatsToNoteStarts.get(beatsToNoteStarts.keySet().toArray()[0]).get(0);
 
     for (List<MusicNote> starts : beatsToNoteStarts.values()) {
       for (MusicNote note : starts) {
