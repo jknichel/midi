@@ -138,32 +138,6 @@ public class Song implements IMusicEditorModel {
     return tempo;
   }
 
-  /**
-   * Combines two songs to play both of their notes consecutively (one after another).
-   * This is new from HW05.
-   * @param s the song to be played after the given song
-   *
-  public void combineConsec(Song s){
-    int firstSongLength = this.getLength();
-    for (NoteList nl : s.noteLists) {
-      for (MusicNoteInSong n : nl.getNotes()) {
-        n.delay(firstSongLength);
-        this.addNote(n);
-      }
-    }
-  }*/
-
-  /**
-   * Combines this Song with Song s
-   * This is new from HW05.
-   * @param s the song to have its notes added to the given song
-   *
-  public void combineSimul(Song s) {
-    for (NoteList nl : s.noteLists) {
-      nl.getNotes().forEach(this::addNote);
-    }
-  } */
-
   @Override
   public List<MusicNote> noteRange() {
     List<MusicNote> noteRange = new ArrayList<>();

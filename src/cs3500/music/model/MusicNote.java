@@ -19,17 +19,17 @@ public class MusicNote {
   /**
    * Holds an int to identify the instrument, to be interpreted by MIDI. Optional.
    */
-  private int instrument;
+  private final int instrument;
 
   /**
    * Holds and int to identify the volume of the note. Optional
    */
-  private int volume;
+  private final int volume;
 
   /**
    * Holds the totalDuration the note continues on for.
    */
-  private int totalDuration;
+  private final int totalDuration;
 
   /**
    * Default constructor for MusicNote class. Simply creates a note representing "middle C".
@@ -37,6 +37,9 @@ public class MusicNote {
   public MusicNote() {
     this.pitch = Pitches.C;
     this.octave = 4;
+    this.instrument = 0;
+    this.volume = 90;
+    this.totalDuration = 4;
   }
 
   /**
@@ -51,6 +54,9 @@ public class MusicNote {
     }
     this.pitch = pitch;
     this.octave = octave;
+    this.instrument = 0;
+    this.volume = 90;
+    this.totalDuration = 4;
   }
 
   /**
@@ -97,10 +103,26 @@ public class MusicNote {
     return totalDuration;
   }
 
+  /**
+   * Get the volume of the note.
+   * @return the volume of the note.
+   */
   public int getVolume() {
     return volume;
   }
 
+  /**
+   * Getter for the instrument.
+   * @return the instrument value.
+   */
+  public int getInstrument() {
+    return instrument;
+  }
+
+  /**
+   * Returns a string representation of the note (pitch and octave).
+   * @return the string representation of the note.
+   */
   public String toString() {
     return pitch.toString() + String.valueOf(octave);
   }

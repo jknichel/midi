@@ -1,6 +1,5 @@
 package cs3500.music.model;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +45,7 @@ public interface IMusicEditorModel {
   Map<Integer, List<MusicNote>> noteStartingBeats();
 
   /**
-   * Return a lit of all notes in a song that continue through the given beat.
+   * Return a list of all notes in a song that continue through the given beat.
    * This is new from HW05.
    * @return list of notes continuing through the given beat.
    */

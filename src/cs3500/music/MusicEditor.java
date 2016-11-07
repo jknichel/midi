@@ -10,32 +10,22 @@ import cs3500.music.model.Song;
 import cs3500.music.util.CompositionBuilder;
 import cs3500.music.util.MusicReader;
 import cs3500.music.view.IMusicEditorView;
-import cs3500.music.view.MusicEditorGuiView;
 import cs3500.music.view.MusicViewCreator;
-import cs3500.music.view.MidiView;
-import cs3500.music.view.MusicEditorConsoleView;
 
 /**
- * MusicEditor main() runner class. Creates a model, view, and controller and runs the editor.
+ * MusicEditor main() runner class. Creates a model and controller, then creates a view based on
+ * passed args (either console, visual, or midi).
  */
 public class MusicEditor {
   public static void main(String[] args) {
-    String fileName;
-    String viewType;
-
-    if (args.length == 1) {
-      fileName = args[0];
-      viewType = "console";
-    } else {
-      fileName = args[0];
-      viewType = args[1];
+    if (args.length != 2) {
+      throw new IllegalArgumentException("Invalid arguments. Exactly 2 args required.");
     }
-
     try {
-      Readable fileReader = new FileReader(new File(fileName));
+      Readable fileReader = new FileReader(new File(args[0]));
       CompositionBuilder<Song> builder = new Song.Builder();
       Song model = MusicReader.parseFile(fileReader, builder);
-      IMusicEditorView view = new MusicViewCreator().create(viewType);
+      IMusicEditorView view = new MusicViewCreator().create(args[1]);
       IMusicEditorController controller = new MusicEditorController(model, view);
       controller.go();
     } catch (FileNotFoundException e) {

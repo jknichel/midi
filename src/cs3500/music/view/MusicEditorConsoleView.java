@@ -5,21 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.model.MusicNote;
-
-// thread.sleep(3);
 
 /**
  * A console view for a IMusicEditorModel.
  */
 public class MusicEditorConsoleView implements IMusicEditorView {
-  IMusicEditorModel model;
   final Appendable out = System.out;
 
   @Override
   public void initializeView(int tempo) {
-    return;
   }
 
   @Override
@@ -28,19 +23,26 @@ public class MusicEditorConsoleView implements IMusicEditorView {
     // figure out how many spaces we need to pad to, based on the total number of beats in song
     int lengthToPadNotes = String.valueOf(songLength).length();
     try {
-      out.append(noteHeaderRow(noteRange, lengthToPadNotes) + "\n");
+      out.append(noteHeaderRow(noteRange, lengthToPadNotes)).append("\n");
       for (int i = 0; i <= songLength; i++) {
         out.append(String.format("%1$" + String.valueOf(lengthToPadNotes) + "d", i));
-        out.append("  " + beatRowToString(noteRange, noteStartingBeats.get(i),
-                noteContinuationBeats.get(i)) + "\n");
+        out.append("  ").append(beatRowToString(noteRange, noteStartingBeats.get(i),
+                noteContinuationBeats.get(i))).append("\n");
       }
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
+  /**
+   * Make the header note row for the console view.
+   * @param noteRange the range of notes in the song, from lowest to highest.
+   * @param lengthToPadNotes the length to pad the notes, based on the number of beats in the song.
+   * @return a string of the header row.
+   */
   private String noteHeaderRow(List<MusicNote> noteRange, int lengthToPadNotes) {
-    // Create the string of whitespace to block off column for beats before starting note headerRowString
+    // Create the string of whitespace to block off column for beats before starting note
+    // headerRowString
     String formatString = "%-" + String.valueOf(lengthToPadNotes) + "s";
     String headerRowString = String.format(formatString, " ");
 
@@ -50,6 +52,13 @@ public class MusicEditorConsoleView implements IMusicEditorView {
     return headerRowString;
   }
 
+  /**
+   * Render a string to represent a row of a specific beat in the console.
+   * @param noteRange the range of notes in the song.
+   * @param noteStarts list of notes that start on given beat.
+   * @param noteContinues list of notes that continue through given beat.
+   * @return string representation of that row.
+   */
   private String beatRowToString(List<MusicNote> noteRange, List<MusicNote> noteStarts,
                                  List<MusicNote> noteContinues) {
     if (noteStarts == null) {
@@ -87,6 +96,11 @@ public class MusicEditorConsoleView implements IMusicEditorView {
     return beatRow;
   }
 
+  /**
+   * Simple helper to center the name of a note in a column for the note header row.
+   * @param noteString the string representing the note.
+   * @return noteString properly whitespaced to be centered.
+   */
   private String centerNoteText(String noteString) {
     if (noteString.length() == 2) {
       return "  " + noteString + " ";

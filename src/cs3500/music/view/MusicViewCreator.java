@@ -1,14 +1,9 @@
 package cs3500.music.view;
 
-import java.util.List;
-import java.util.Map;
-
-import cs3500.music.model.MusicNote;
-
 /**
  * Factory class for view creation.
  */
-public class MusicViewCreator implements IMusicEditorView {
+public class MusicViewCreator {
 
   /**
    * Method that creates and returns the appropriate view given a designating string.
@@ -24,19 +19,7 @@ public class MusicViewCreator implements IMusicEditorView {
       case "midi":
         return new MidiView();
       default:
-        break;
+        throw new IllegalArgumentException("Invalid view type!");
     }
-    throw new IllegalArgumentException("Invalid view type");
-  }
-
-  @Override
-  public void initializeView(int tempo) {
-    return;
-  }
-
-  @Override
-  public void refresh(List<MusicNote> noteRange, Map<Integer, List<MusicNote>> noteStartingBeats,
-                      Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength) {
-
   }
 }

@@ -86,4 +86,15 @@ public class PitchesTest {
     assertEquals(pitch.toString(), "B");
   }
 
+  /**
+   * Tests that the method to translate an int to a Pitches enum works correctly.
+   */
+  @Test
+  public void getPitchFromScaleIndexTest() {
+    Pitches pitch = Pitches.C;
+    assertEquals(pitch, pitch.getPitchFromScaleIndex(1));
+    assertEquals(Pitches.B, pitch.getPitchFromScaleIndex(12));
+    assertEquals(Pitches.G_SHARP, pitch.getPitchFromScaleIndex(9));
+  }
+
 }
