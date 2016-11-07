@@ -6,26 +6,34 @@ import java.io.FileReader;
 
 import cs3500.music.controller.IMusicEditorController;
 import cs3500.music.controller.MusicEditorController;
-import cs3500.music.model.IMusicEditorModel;
-import cs3500.music.model.Pitches;
 import cs3500.music.model.Song;
 import cs3500.music.util.CompositionBuilder;
 import cs3500.music.util.MusicReader;
 import cs3500.music.view.IMusicEditorView;
-import cs3500.music.view.MusicEditorConsoleView;
 import cs3500.music.view.MusicEditorGuiView;
+import cs3500.music.view.MusicViewCreator;
 
 /**
  * MusicEditor main() runner class. Creates a model, view, and controller and runs the editor.
  */
 public class MusicEditor {
   public static void main(String[] args) {
-    File songFile = new File("mary-little-lamb.txt");
+    String fileName;
+    String viewType = null;
+
+    if (args.length == 1) {
+      fileName = args[0];
+      viewType = "console";
+    } else {
+      fileName = args[0];
+      viewType = args[1];
+    }
+
     try {
-      Readable fileReader = new FileReader(songFile);
+      Readable fileReader = new FileReader(new File(fileName));
       CompositionBuilder<Song> builder = new Song.Builder();
       Song model = MusicReader.parseFile(fileReader, builder);
-      IMusicEditorView view = new MusicEditorGuiView();
+      IMusicEditorView view = new MusicViewCreator().create(viewType);
       IMusicEditorController controller = new MusicEditorController(model, view);
       controller.go();
     } catch (FileNotFoundException e) {
