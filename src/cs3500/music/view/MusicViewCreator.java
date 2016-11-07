@@ -30,7 +30,7 @@ public class MusicViewCreator implements IMusicEditorView {
   }
 
   @Override
-  public void makeVisible() {
+  public void initializeView(int tempo) {
     return;
   }
 

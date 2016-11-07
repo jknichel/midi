@@ -18,7 +18,7 @@ public class MusicEditorConsoleView implements IMusicEditorView {
   final Appendable out = System.out;
 
   @Override
-  public void makeVisible() {
+  public void initializeView(int tempo) {
     return;
   }
 

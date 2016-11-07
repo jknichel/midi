@@ -12,10 +12,10 @@ import cs3500.music.model.MusicNote;
  */
 public interface IMusicEditorView {
   /**
-   * Make the view visible. Should be called in a controller's initialization method after the view
+   * Initialize the view. Should be called in a controller's initialization method after the view
    * has already been constructed.
    */
-  void makeVisible();
+  void initializeView(int tempo);
 
   /**
    * Command for the view to redraw itself. Takes in a bunch of info about the state of the model

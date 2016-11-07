@@ -17,7 +17,7 @@ public class MusicEditorController implements IMusicEditorController {
 
   @Override
   public void go() {
-    this.view.makeVisible();
+    this.view.initializeView(model.getTempo());
     this.view.refresh(model.noteRange(), model.noteStartingBeats(), model.noteContinuationBeats(),
             model.getLength());
   }

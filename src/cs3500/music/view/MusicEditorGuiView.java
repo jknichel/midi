@@ -59,7 +59,7 @@ public class MusicEditorGuiView extends JPanel implements IMusicEditorView {
   }
 
   @Override
-  public void makeVisible() {
+  public void initializeView(int tempo) {
     this.frame.setVisible(true);
   }
 
@@ -81,6 +81,6 @@ public class MusicEditorGuiView extends JPanel implements IMusicEditorView {
     this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     this.frame.setBackground(Color.WHITE);
     this.frame.add(scroller);
-    this.makeVisible();
+    this.initializeView(0);
   }
 }

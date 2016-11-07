@@ -18,9 +18,14 @@ import cs3500.music.model.MusicNote;
  * Implements the IMusicEditorView interface to play a song through MIDI.
  */
 public class MidiView implements IMusicEditorView {
-  @Override
-  public void makeVisible() {
+  /**
+   * Stores the tempo of the song in
+   */
+  int tempo;
 
+  @Override
+  public void initializeView(int tempo) {
+    this.tempo = tempo;
   }
 
   @Override
@@ -43,15 +48,18 @@ public class MidiView implements IMusicEditorView {
       }
 
       sequencer.setSequence(sequence);
-      sequencer.setTempoInMPQ(200000);
+      sequencer.setTempoInMPQ(this.tempo);
       sequencer.setLoopCount(0);
 
       sequencer.start();
       try {
-        Thread.sleep(100000);
+        Thread.sleep(1000);
       } catch (InterruptedException e) {
+        sequencer.stop();
+        return;
       }
       sequencer.stop();
+      return;
     } catch (MidiUnavailableException e) {
       return;
     } catch (InvalidMidiDataException e) {
