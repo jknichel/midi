@@ -12,6 +12,8 @@ import cs3500.music.util.MusicReader;
 import cs3500.music.view.IMusicEditorView;
 import cs3500.music.view.MusicEditorGuiView;
 import cs3500.music.view.MusicViewCreator;
+import cs3500.music.view.MidiView;
+import cs3500.music.view.MusicEditorConsoleView;
 
 /**
  * MusicEditor main() runner class. Creates a model, view, and controller and runs the editor.

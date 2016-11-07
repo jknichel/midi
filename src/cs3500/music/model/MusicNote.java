@@ -97,6 +97,10 @@ public class MusicNote {
     return totalDuration;
   }
 
+  public int getVolume() {
+    return volume;
+  }
+
   public String toString() {
     return pitch.toString() + String.valueOf(octave);
   }

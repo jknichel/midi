@@ -66,7 +66,8 @@ public class Song implements IMusicEditorModel {
     }
 
     @Override
-    public CompositionBuilder<Song> addNote(int start, int end, int instrument, int pitch, int volume) {
+    public CompositionBuilder<Song> addNote(int start, int end, int instrument, int pitch,
+                                            int volume) {
       Map<String, Integer> noteInfo = new HashMap<>();
 
       noteInfo.put("start", start);
