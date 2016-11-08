@@ -1,11 +1,10 @@
-package cs3500.music.view;
+package cs3500.music.tests;
 
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.Scanner;
 
 import cs3500.music.controller.IMusicEditorController;
 import cs3500.music.controller.MusicEditorController;
@@ -13,6 +12,8 @@ import cs3500.music.model.Song;
 import cs3500.music.util.CompositionBuilder;
 import cs3500.music.util.MockMidiReceiver;
 import cs3500.music.util.MusicReader;
+import cs3500.music.view.IMusicEditorView;
+import cs3500.music.view.MusicViewCreator;
 
 import static org.junit.Assert.assertEquals;
 
