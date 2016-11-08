@@ -1,11 +1,17 @@
 package cs3500.music.view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.List;
 import java.util.Map;
 
 import javax.sound.midi.Receiver;
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.WindowConstants;
 
 import cs3500.music.model.MusicNote;
 

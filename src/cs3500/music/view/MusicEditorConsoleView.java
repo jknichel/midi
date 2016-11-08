@@ -17,6 +17,7 @@ public class MusicEditorConsoleView implements IMusicEditorView {
 
   @Override
   public void initializeView(int tempo) {
+    // For a console view, there's no initialization needed. Just start writing to System.out.
   }
 
   @Override

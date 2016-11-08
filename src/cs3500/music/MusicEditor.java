@@ -17,6 +17,11 @@ import cs3500.music.view.MusicViewCreator;
  * passed args (either console, visual, or midi).
  */
 public class MusicEditor {
+  /**
+   * The main() method. Starts up a controller, view, and model and starts running the
+   * Music Editor.
+   * @param args the console command args from when the program is executed.
+   */
   public static void main(String[] args) {
     if (args.length != 2) {
       throw new IllegalArgumentException("Invalid arguments. Exactly 2 args required.");
@@ -27,7 +32,7 @@ public class MusicEditor {
       Song model = MusicReader.parseFile(fileReader, builder);
       IMusicEditorView view = new MusicViewCreator().create(args[1]);
       IMusicEditorController controller = new MusicEditorController(model, view);
-      controller.go();
+      controller.runMusicEditor();
     } catch (FileNotFoundException e) {
       e.getStackTrace();
     }

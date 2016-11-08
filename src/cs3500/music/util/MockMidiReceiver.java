@@ -12,7 +12,7 @@ import javax.sound.midi.ShortMessage;
  */
 public class MockMidiReceiver implements Receiver {
   /**
-   * The appendable for logging the Midi Message Info
+   * The appendable for logging the Midi Message Info.
    */
   Appendable log = new StringBuilder();
 

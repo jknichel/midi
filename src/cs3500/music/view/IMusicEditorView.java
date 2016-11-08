@@ -20,8 +20,8 @@ public interface IMusicEditorView {
 
   /**
    * Initialize the view. To be used to pass a mock receiver for the MIDI testing.
-   * @param tempo
-   * @param receiver
+   * @param tempo the tempo in microseconds per beat.
+   * @param receiver a specific MidiReceiver to be used.
    */
   void initializeView(int tempo, Receiver receiver);
 

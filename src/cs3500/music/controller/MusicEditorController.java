@@ -37,7 +37,7 @@ public class MusicEditorController implements IMusicEditorController {
   }
 
   @Override
-  public void go() {
+  public void runMusicEditor() {
     if (this.mockReceiver == null) {
       this.view.initializeView(model.getTempo());
     } else {

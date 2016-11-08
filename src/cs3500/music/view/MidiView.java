@@ -19,14 +19,14 @@ import cs3500.music.model.MusicNote;
  */
 public class MidiView implements IMusicEditorView {
   /**
-   * Stores the tempo of the song in
+   * Stores the tempo of the song microseconds per beat.
    */
   private int tempo;
 
   /**
-   * Holds a special mock receiver, to be used for testing.
+   * Holds a special receiver, only used for testing for now.
    */
-  private Receiver mockReceiver;
+  private Receiver receiver;
 
   @Override
   public void initializeView(int tempo) {
@@ -36,7 +36,7 @@ public class MidiView implements IMusicEditorView {
   @Override
   public void initializeView(int tempo, Receiver receiver) {
     this.tempo = tempo;
-    this.mockReceiver = receiver;
+    this.receiver = receiver;
   }
 
   @Override
@@ -57,10 +57,10 @@ public class MidiView implements IMusicEditorView {
       seq = MidiSystem.getSequencer();
       seqTrans = seq.getTransmitter();
       synth = MidiSystem.getSynthesizer();
-      if (this.mockReceiver == null) {
+      if (this.receiver == null) {
         synthRcvr = synth.getReceiver();
       } else {
-        synthRcvr = this.mockReceiver;
+        synthRcvr = this.receiver;
         timeToSleepThread = 0;
       }
       seqTrans.setReceiver(synthRcvr);
@@ -102,6 +102,8 @@ public class MidiView implements IMusicEditorView {
 
       receiver.send(onMsg, beat * tempo);
       receiver.send(offMsg, (beat + note.getTotalDuration()) * tempo);
-    } catch (InvalidMidiDataException e) {}
+    } catch (InvalidMidiDataException e) {
+      // Handling could be added here, but for now we can just move onto the next note.
+    }
   }
 }

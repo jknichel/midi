@@ -34,7 +34,7 @@ public class MidiViewTest {
       Song model = MusicReader.parseFile(fileReader, builder);
       IMusicEditorView view = new MusicViewCreator().create("midi");
       IMusicEditorController controller = new MusicEditorController(model, view, mock);
-      controller.go();
+      controller.runMusicEditor();
     } catch (FileNotFoundException e) {
       e.getStackTrace();
     }

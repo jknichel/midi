@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import cs3500.music.util.*;
+import cs3500.music.util.CompositionBuilder;
 
 /**
  * An object to represent a song. A song consists of NoteLists which hold all of the notes of the
