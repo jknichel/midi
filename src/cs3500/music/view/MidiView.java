@@ -95,8 +95,10 @@ public class MidiView implements IMusicEditorView {
     int midiCompatiblePitch = (note.getPitch().getScaleIndex() - 1) + (note.getOctave() * 12) + 12;
 
     try {
-      onMsg.setMessage(ShortMessage.NOTE_ON, 10, midiCompatiblePitch, note.getVolume());
-      offMsg.setMessage(ShortMessage.NOTE_OFF, 10, midiCompatiblePitch, note.getVolume());
+      onMsg.setMessage(ShortMessage.NOTE_ON, note.getInstrument() % 15, midiCompatiblePitch,
+              note.getVolume());
+      offMsg.setMessage(ShortMessage.NOTE_OFF, note.getInstrument() % 15, midiCompatiblePitch,
+              note.getVolume());
 
       receiver.send(onMsg, beat * tempo);
       receiver.send(offMsg, (beat + note.getTotalDuration()) * tempo);
