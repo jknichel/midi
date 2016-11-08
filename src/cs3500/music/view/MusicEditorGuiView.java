@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.Map;
 
+import javax.sound.midi.Receiver;
 import javax.swing.*;
 
 import cs3500.music.model.MusicNote;
@@ -61,6 +62,11 @@ public class MusicEditorGuiView extends JPanel implements IMusicEditorView {
   @Override
   public void initializeView(int tempo) {
     this.frame.setVisible(true);
+  }
+
+  @Override
+  public void initializeView(int temp, Receiver receiver) {
+    throw new IllegalArgumentException("This constructor can't be used for this view.");
   }
 
   @Override

@@ -21,11 +21,22 @@ public class MidiView implements IMusicEditorView {
   /**
    * Stores the tempo of the song in
    */
-  int tempo;
+  private int tempo;
+
+  /**
+   * Holds a special mock receiver, to be used for testing.
+   */
+  private Receiver mockReceiver;
 
   @Override
   public void initializeView(int tempo) {
     this.tempo = tempo;
+  }
+
+  @Override
+  public void initializeView(int tempo, Receiver receiver) {
+    this.tempo = tempo;
+    this.mockReceiver = receiver;
   }
 
   @Override
@@ -35,11 +46,23 @@ public class MidiView implements IMusicEditorView {
     Transmitter seqTrans;
     Synthesizer synth;
     Receiver synthRcvr;
+    /**
+     * Calculate the time to sleep the thread by multiplying the number of beats by the time of
+     * each beat in milliseconds which is calculated by dividing the tempo (in microseconds/beat)
+     * by 1000.
+     */
+    int timeToSleepThread = songLength * tempo / 1000;
+
     try {
       seq = MidiSystem.getSequencer();
       seqTrans = seq.getTransmitter();
       synth = MidiSystem.getSynthesizer();
-      synthRcvr = synth.getReceiver();
+      if (this.mockReceiver == null) {
+        synthRcvr = synth.getReceiver();
+      } else {
+        synthRcvr = this.mockReceiver;
+        timeToSleepThread = 0;
+      }
       seqTrans.setReceiver(synthRcvr);
       synth.open();
 
@@ -51,8 +74,7 @@ public class MidiView implements IMusicEditorView {
         }
       }
 
-      // Translate song length to milliseconds, and let the program execute that long.
-      Thread.sleep(songLength * tempo / 1000);
+      Thread.sleep(timeToSleepThread);
     } catch (MidiUnavailableException e) {
       return;
     } catch (InterruptedException e) {

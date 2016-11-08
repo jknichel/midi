@@ -3,6 +3,8 @@ package cs3500.music.view;
 import java.util.List;
 import java.util.Map;
 
+import javax.sound.midi.Receiver;
+
 import cs3500.music.model.MusicNote;
 
 /**
@@ -15,6 +17,13 @@ public interface IMusicEditorView {
    * has already been constructed.
    */
   void initializeView(int tempo);
+
+  /**
+   * Initialize the view. To be used to pass a mock receiver for the MIDI testing.
+   * @param tempo
+   * @param receiver
+   */
+  void initializeView(int tempo, Receiver receiver);
 
   /**
    * Command for the view to redraw itself. Takes in a bunch of info about the state of the model

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.sound.midi.Receiver;
+
 import cs3500.music.model.MusicNote;
 
 /**
@@ -15,6 +17,11 @@ public class MusicEditorConsoleView implements IMusicEditorView {
 
   @Override
   public void initializeView(int tempo) {
+  }
+
+  @Override
+  public void initializeView(int tempo, Receiver receiver) {
+    throw new IllegalArgumentException("This constructor can't be used for this view.");
   }
 
   @Override
