@@ -17,7 +17,6 @@ public class GuiGridAndNotes extends JPanel {
   private static final int BOX_HEIGHT = 18;
   private List<MusicNote> noteRange;
   private Map<Integer, List<MusicNote>> noteStartingBeats;
-  private Map<Integer, List<MusicNote>> noteContinuationBeats;
   private int songLength;
 
   /**
@@ -25,14 +24,12 @@ public class GuiGridAndNotes extends JPanel {
    *
    * @param noteRange             the range of notes in a song
    * @param noteStartingBeats     the map of starting beats to notes in a song
-   * @param noteContinuationBeats the map of continuing beats to notes in a song
    * @param songLength            the length of the song in beats
    */
   public GuiGridAndNotes(List<MusicNote> noteRange, Map<Integer, List<MusicNote>> noteStartingBeats,
-                         Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength) {
+                         int songLength) {
     this.noteRange = noteRange;
     this.noteStartingBeats = noteStartingBeats;
-    this.noteContinuationBeats = noteContinuationBeats;
     this.songLength = songLength;
   }
 
@@ -82,13 +79,23 @@ public class GuiGridAndNotes extends JPanel {
       int k = e.getKey();
       int x = k * BOX_WIDTH + 8;
       for (MusicNote songNote : e.getValue()) {
+        int d = songNote.getTotalDuration() - 1;
         for (MusicNote rangeNote : noteRange) {
           if (rangeNote.getPitch() == songNote.getPitch()
                   && rangeNote.getOctave() == songNote.getOctave()) {
             if (noteRange.indexOf(rangeNote) == 0) {
-              g.fillRect(x, 5, BOX_WIDTH, BOX_HEIGHT);
+              if (c.equals(Color.green)) {
+
+                g.fillRect(x, 5, d * BOX_WIDTH, BOX_HEIGHT);
+              } else {
+                g.fillRect(x, 5, BOX_WIDTH, BOX_HEIGHT);
+              }
             } else {
-              g.fillRect(x, noteRange.indexOf(rangeNote) * 20 + 5, BOX_WIDTH, BOX_HEIGHT);
+              if (c.equals(Color.green)) {
+                g.fillRect(x, noteRange.indexOf(rangeNote) * 20 + 5, d * BOX_WIDTH, BOX_HEIGHT);
+              } else {
+                g.fillRect(x, noteRange.indexOf(rangeNote) * 20 + 5, BOX_WIDTH, BOX_HEIGHT);
+              }
             }
           }
         }
@@ -102,10 +109,7 @@ public class GuiGridAndNotes extends JPanel {
    * @param g the graphics used to draw the notes
    */
   private void drawNotes(Graphics g) {
-    // draw note continuations
-    drawNotesHelper(noteContinuationBeats, Color.green, g);
-
-    // draw note starts
+    drawNotesHelper(noteStartingBeats, Color.green, g);
     drawNotesHelper(noteStartingBeats, Color.black, g);
   }
 
