@@ -24,11 +24,10 @@ public class GuiGridAndNotes extends JPanel {
    *
    * @param noteRange             the range of notes in a song
    * @param noteStartingBeats     the map of starting beats to notes in a song
-   * @param noteContinuationBeats the map of continuing beats to notes in a song
    * @param songLength            the length of the song in beats
    */
   public GuiGridAndNotes(List<MusicNote> noteRange, Map<Integer, List<MusicNote>> noteStartingBeats,
-                         Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength) {
+                         int songLength) {
     this.noteRange = noteRange;
     this.noteStartingBeats = noteStartingBeats;
     this.songLength = songLength;

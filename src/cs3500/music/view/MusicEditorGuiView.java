@@ -68,7 +68,7 @@ public class MusicEditorGuiView extends JPanel implements IMusicEditorView {
                       Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength) {
     Box pitches = drawPitches(noteRange);
     Box beats = drawBeats(songLength);
-    GuiGridAndNotes grid = new GuiGridAndNotes(noteRange, noteStartingBeats, noteContinuationBeats,
+    GuiGridAndNotes grid = new GuiGridAndNotes(noteRange, noteStartingBeats,
             songLength);
 
     this.panel.add(pitches, BorderLayout.WEST);
