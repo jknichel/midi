@@ -1,17 +1,11 @@
 package cs3500.music.view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.*;
 import java.util.List;
 import java.util.Map;
 
 import javax.sound.midi.Receiver;
-import javax.swing.Box;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 
 import cs3500.music.model.MusicNote;
 
@@ -31,7 +25,7 @@ public class MusicEditorGuiView extends JPanel implements IMusicEditorView {
     Box pitches = Box.createVerticalBox();
     for (MusicNote n : noteRange) {
       JLabel pitch = new JLabel(n.toString());
-      pitches.add(Box.createVerticalStrut(4));
+      pitches.add(Box.createVerticalStrut(5));
       pitches.add(pitch);
     }
     return pitches;
@@ -45,19 +39,11 @@ public class MusicEditorGuiView extends JPanel implements IMusicEditorView {
     Box beats = Box.createHorizontalBox();
     for (int i = 0; i <= songLength; i += 16) {
       if (i == 0) {
-        beats.add(Box.createHorizontalStrut(27));
+        beats.add(Box.createHorizontalStrut(30));
         JLabel beat = new JLabel(Integer.toString(i));
         beats.add(beat);
-      } else if (i > 99) {
-        beats.add(Box.createHorizontalStrut(300));
-        JLabel beat = new JLabel(Integer.toString(i));
-        beats.add(beat);
-      } else if (i > 999) {
-          beats.add(Box.createHorizontalStrut(280));
-          JLabel beat = new JLabel(Integer.toString(i));
-          beats.add(beat);
       } else {
-        beats.add(Box.createHorizontalStrut(310));
+        beats.add(Box.createHorizontalStrut(320 - String.valueOf(i).length() * 8));
         JLabel beat = new JLabel(Integer.toString(i));
         beats.add(beat);
       }
@@ -82,6 +68,9 @@ public class MusicEditorGuiView extends JPanel implements IMusicEditorView {
     Box beats = drawBeats(songLength);
     GuiGridAndNotes grid = new GuiGridAndNotes(noteRange, noteStartingBeats,
             songLength);
+
+    this.scroller.getVerticalScrollBar().setUnitIncrement(16);
+    this.scroller.getHorizontalScrollBar().setUnitIncrement(16);
 
     this.panel.add(pitches, BorderLayout.WEST);
     this.panel.add(beats, BorderLayout.NORTH);
