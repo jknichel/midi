@@ -1,6 +1,7 @@
 package cs3500.music.view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ import cs3500.music.model.MusicNote;
 /**
  * Visual view class for a music editor.
  */
-public class MusicEditorGuiView extends JPanel implements IMusicEditorView {
+public class MusicEditorGuiView extends JPanel implements GuiView {
   private final JFrame frame = new JFrame("Music Editor - Justin Knichel | Ben Brody");
   private final JPanel panel = new JPanel(new BorderLayout());
   private final JScrollPane scroller = new JScrollPane(panel);
@@ -70,7 +71,18 @@ public class MusicEditorGuiView extends JPanel implements IMusicEditorView {
             songLength);
 
     this.scroller.getVerticalScrollBar().setUnitIncrement(16);
+    InputMap im = this.scroller.getVerticalScrollBar().
+            getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+    im.put(KeyStroke.getKeyStroke("DOWN"), "positiveUnitIncrement");
+    im.put(KeyStroke.getKeyStroke("UP"), "negativeUnitIncrement");
+
+
     this.scroller.getHorizontalScrollBar().setUnitIncrement(16);
+    im = this.scroller.getHorizontalScrollBar().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+    im.put(KeyStroke.getKeyStroke("RIGHT"), "positiveUnitIncrement");
+    im.put(KeyStroke.getKeyStroke("LEFT"), "negativeUnitIncrement");
+    im.put(KeyStroke.getKeyStroke("HOME"), "minScroll");
+    im.put(KeyStroke.getKeyStroke("END"), "maxScroll");
 
     this.panel.add(pitches, BorderLayout.WEST);
     this.panel.add(beats, BorderLayout.NORTH);
