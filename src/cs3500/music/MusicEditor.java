@@ -4,11 +4,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
+import cs3500.music.controller.GuiViewController;
 import cs3500.music.controller.IMusicEditorController;
 import cs3500.music.controller.MusicEditorController;
+import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.model.Song;
 import cs3500.music.util.CompositionBuilder;
 import cs3500.music.util.MusicReader;
+import cs3500.music.view.GuiView;
 import cs3500.music.view.IMusicEditorView;
 import cs3500.music.view.MusicViewCreator;
 
@@ -29,13 +32,12 @@ public class MusicEditor {
     try {
       Readable fileReader = new FileReader(new File(args[0]));
       CompositionBuilder<Song> builder = new Song.Builder();
-      Song model = MusicReader.parseFile(fileReader, builder);
-      IMusicEditorView view = new MusicViewCreator().create(args[1]);
-      IMusicEditorController controller = new MusicEditorController(model, view);
+      IMusicEditorModel model = MusicReader.parseFile(fileReader, builder);
+      GuiView view = (GuiView) new MusicViewCreator().create(args[1]);
+      IMusicEditorController controller = new GuiViewController(model, view);
       controller.runMusicEditor();
     } catch (FileNotFoundException e) {
       e.getStackTrace();
     }
-    return;
   }
 }

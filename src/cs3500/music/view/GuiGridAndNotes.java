@@ -49,6 +49,9 @@ public class GuiGridAndNotes extends JPanel {
     for (int i = 0; i <= noteRange.size(); i++) {
       g2.draw(new Line2D.Float(7, vert, songLength * 20 + 7, vert));
       vert += 20;
+      if (i == noteRange.size()) {
+        g.drawLine(songLength * 20 + 7, 4, songLength * 20 + 7, vert - 20);
+      }
     }
     g.drawLine(songLength * 20 + 7, 4, songLength * 20 + 7, vert - 20);
   }
@@ -68,6 +71,11 @@ public class GuiGridAndNotes extends JPanel {
       horiz += tempo;
       counter += 4;
     }
+  }
+
+  public void drawCurrentBeatLine(int currentBeat, Graphics g) {
+    g.setColor(Color.red);
+    g.drawLine(currentBeat * 20 + 7, 6, currentBeat * 20 + 7, noteRange.size() * 20 + 3);
   }
 
   /**
@@ -123,6 +131,7 @@ public class GuiGridAndNotes extends JPanel {
     this.drawHorizontalLines(g);
     this.drawNotes(g);
     this.drawVerticalLines(g);
+    this.drawCurrentBeatLine(MusicEditorGuiView.currentBeat, g);
     this.repaint();
   }
 }

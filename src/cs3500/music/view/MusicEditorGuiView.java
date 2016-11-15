@@ -2,6 +2,8 @@ package cs3500.music.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import java.util.List;
 import java.util.Map;
 
@@ -17,9 +19,39 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
   private final JFrame frame = new JFrame("Music Editor - Justin Knichel | Ben Brody");
   private final JPanel panel = new JPanel(new BorderLayout());
   private final JScrollPane scroller = new JScrollPane(panel);
+  static int currentBeat;
+
+  @Override
+  public void pause() {
+
+  }
+
+  @Override
+  public void addKeyListener(KeyListener k) {
+    this.frame.addKeyListener(k);
+  }
+
+  @Override
+  public void addMouseListener(MouseListener m) {
+    this.panel.addMouseListener(m);
+  }
+
+  @Override
+  public void removeMouseListener(MouseListener m) {
+    this.panel.removeMouseListener(m);
+  }
+
+  public void update() {
+    currentBeat++;
+    // if the beat gets to the end of the screen, scroll right
+    if (currentBeat * 20 >= this.frame.getBounds().getSize().getWidth() - 40) {
+      this.scroller.getHorizontalScrollBar().setValue(currentBeat * 20);
+    }
+  }
 
   /**
    * Draw the pitches on the left side of the frame.
+   *
    * @return a box that contains the pitches of the song being played.
    */
   private Box drawPitches(List<MusicNote> noteRange) {
@@ -34,6 +66,7 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
 
   /**
    * Draw the number of the beat every 16 beats.
+   *
    * @return a box with the beats along the top of the composition
    */
   private Box drawBeats(int songLength) {
@@ -49,6 +82,7 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
         beats.add(beat);
       }
     }
+
     return beats;
   }
 
@@ -67,6 +101,7 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
                       Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength) {
     Box pitches = drawPitches(noteRange);
     Box beats = drawBeats(songLength);
+
     GuiGridAndNotes grid = new GuiGridAndNotes(noteRange, noteStartingBeats,
             songLength);
 

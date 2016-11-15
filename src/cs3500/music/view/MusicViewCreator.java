@@ -12,6 +12,8 @@ public class MusicViewCreator {
    */
   public static IMusicEditorView create(String view) {
     switch (view) {
+      case "composite":
+        return new MusicEditorCompositeView();
       case "console":
         return new MusicEditorConsoleView();
       case "visual":
