@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import cs3500.music.util.CompositionBuilder;
+import cs3500.music.util.MusicReader;
 
 /**
  * An object to represent a song. A song consists of NoteLists which hold all of the notes of the
@@ -125,7 +126,53 @@ public class Song implements IMusicEditorModel {
         beatsToNoteContinuations.put(i, tempList);
       }
     }
-    updateLength();
+    if (end > this.length) {
+      updateLength();
+    }
+  }
+
+  @Override
+  public void removeNote(int start, Pitches pitch, int octave) {
+    if (!noteStartingBeats().containsKey(start)) {
+      throw new IllegalArgumentException("No note starts on that beat, cannot remove!");
+    }
+
+    List<MusicNote> notesOnBeat = noteStartingBeats().get(start);
+    MusicNote noteToRemove = null;
+    int indexToRemove = -1;
+
+    for (MusicNote note : notesOnBeat) {
+      if (note.getPitch() == pitch && note.getOctave() == octave) {
+        noteToRemove = note;
+        indexToRemove = notesOnBeat.indexOf(note);
+        break;
+      }
+    }
+    if (indexToRemove == -1) {
+      throw new IllegalArgumentException("No note matching that Pitch begins at that beat!");
+    }
+    notesOnBeat.remove(indexToRemove);
+    if (notesOnBeat.size() == 0) {
+      beatsToNoteStarts.remove(start);
+    }
+
+    for (int i = start; i < start + noteToRemove.getTotalDuration(); i++) {
+      notesOnBeat = noteContinuationBeats().get(i);
+      for (MusicNote note : notesOnBeat) {
+        if (note.getPitch() == pitch && note.getOctave() == octave) {
+          indexToRemove = notesOnBeat.indexOf(note);
+          break;
+        }
+      }
+      notesOnBeat.remove(indexToRemove);
+      if (notesOnBeat.size() == 0) {
+        beatsToNoteContinuations.remove(i);
+      }
+    }
+
+    if (start + noteToRemove.getTotalDuration() == this.length) {
+      updateLength();
+    }
   }
 
   @Override
