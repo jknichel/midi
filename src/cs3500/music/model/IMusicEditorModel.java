@@ -31,6 +31,14 @@ public interface IMusicEditorModel {
   void addNote(int start, int end, int instrument, Pitches pitch, int octave, int volume);
 
   /**
+   * Remove a note that starts at the given time and matching the given pitch and octave.
+   * @param start the starting beat of the note to remove.
+   * @param pitch the pitch of the note to remove.
+   * @param octave the octave of the note to remove.
+   */
+  void removeNote(int start, Pitches pitch, int octave);
+
+  /**
    * Get a list from the lowest to highest note in a song.
    * This is new from HW05.
    * @return the list containing all notes in the range of the song.
