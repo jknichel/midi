@@ -27,6 +27,11 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
   }
 
   @Override
+  public void resume() {
+
+  }
+
+  @Override
   public void addKeyListener(KeyListener k) {
     this.frame.addKeyListener(k);
   }
@@ -87,18 +92,25 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
   }
 
   @Override
-  public void initializeView(int tempo) {
-    this.frame.setVisible(true);
+  public void refresh(int beat) {
+    // Going to need to adjust the red line here, at some point...
   }
 
   @Override
-  public void initializeView(int temp, Receiver receiver) {
+  public void initializeView(List<MusicNote> noteRange,
+                             Map<Integer, List<MusicNote>> noteStartingBeats,
+                             Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength,
+                             int temp, Receiver receiver) {
     throw new IllegalArgumentException("This constructor can't be used for this view.");
   }
 
   @Override
-  public void refresh(List<MusicNote> noteRange, Map<Integer, List<MusicNote>> noteStartingBeats,
-                      Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength) {
+  public void initializeView(List<MusicNote> noteRange,
+                             Map<Integer, List<MusicNote>> noteStartingBeats,
+                             Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength,
+                             int tempo) {
+    this.frame.setVisible(true);
+
     Box pitches = drawPitches(noteRange);
     Box beats = drawBeats(songLength);
 
@@ -129,6 +141,6 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
     this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     this.frame.setBackground(Color.WHITE);
     this.frame.add(scroller);
-    this.initializeView(0);
+    this.refresh(0);
   }
 }

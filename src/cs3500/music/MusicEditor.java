@@ -33,9 +33,15 @@ public class MusicEditor {
       Readable fileReader = new FileReader(new File(args[0]));
       CompositionBuilder<Song> builder = new Song.Builder();
       IMusicEditorModel model = MusicReader.parseFile(fileReader, builder);
-      GuiView view = (GuiView) new MusicViewCreator().create(args[1]);
-      IMusicEditorController controller = new GuiViewController(model, view);
-      controller.runMusicEditor();
+      if (args[1].equalsIgnoreCase("console") || args[1].equalsIgnoreCase("midi")) {
+        IMusicEditorView view = new MusicViewCreator().create(args[1]);
+        IMusicEditorController controller = new MusicEditorController(model, view);
+        controller.runMusicEditor();
+      } else {
+        GuiView view = (GuiView) new MusicViewCreator().create(args[1]);
+        IMusicEditorController controller = new GuiViewController(model, view);
+        controller.runMusicEditor();
+      }
     } catch (FileNotFoundException e) {
       e.getStackTrace();
     }

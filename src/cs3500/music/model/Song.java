@@ -127,7 +127,7 @@ public class Song implements IMusicEditorModel {
       }
     }
     if (end > this.length) {
-      updateLength();
+      this.length = end;
     }
   }
 

@@ -27,7 +27,12 @@ public class MusicEditorCompositeView implements GuiView {
 
   @Override
   public void pause() {
+    this.midi.pause();
+  }
 
+  @Override
+  public void resume() {
+    this.midi.resume();
   }
 
   @Override
@@ -38,22 +43,27 @@ public class MusicEditorCompositeView implements GuiView {
   }
 
   @Override
-  public void initializeView(int tempo) {
-    this.gui.initializeView(tempo);
-    this.midi.initializeView(tempo);
-
+  public void refresh(int beat) {
+    this.gui.refresh(beat);
+    this.midi.refresh(beat);
   }
 
   @Override
-  public void initializeView(int tempo, Receiver receiver) {
-    this.gui.initializeView(tempo, receiver);
-    this.midi.initializeView(tempo, receiver);
+  public void initializeView(List<MusicNote> noteRange,
+                             Map<Integer, List<MusicNote>> noteStartingBeats,
+                             Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength,
+                             int tempo, Receiver receiver) {
+    throw new IllegalArgumentException("This constructor can't be used for this view.");
   }
 
   @Override
-  public void refresh(List<MusicNote> noteRange, Map<Integer, List<MusicNote>> noteStartingBeats,
-                      Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength) {
-    this.gui.refresh(noteRange, noteStartingBeats, noteContinuationBeats, songLength);
-    this.midi.refresh(noteRange, noteStartingBeats, noteContinuationBeats, songLength);
+  public void initializeView(List<MusicNote> noteRange,
+                             Map<Integer, List<MusicNote>> noteStartingBeats,
+                             Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength,
+                             int tempo) {
+    this.gui.initializeView(noteRange, noteStartingBeats, noteContinuationBeats, songLength,
+            tempo);
+    this.midi.initializeView(noteRange, noteStartingBeats, noteContinuationBeats, songLength,
+            tempo);
   }
 }

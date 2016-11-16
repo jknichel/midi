@@ -45,9 +45,8 @@ public class GuiViewController implements IMusicEditorController {
 
   @Override
   public void runMusicEditor() {
-    this.view.initializeView(this.model.getTempo());
+    this.view.initializeView(model.noteRange(), model.noteStartingBeats(),
+            model.noteContinuationBeats(), model.getLength(), this.model.getTempo());
     this.tick();
-    this.view.refresh(model.noteRange(), model.noteStartingBeats(),
-            model.noteContinuationBeats(), model.getLength());
   }
 }

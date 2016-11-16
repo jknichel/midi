@@ -13,25 +13,29 @@ import cs3500.music.model.MusicNote;
  */
 public interface IMusicEditorView {
   /**
-   * Initialize the view. Should be called in a controller's initialization method after the view
-   * has already been constructed.
+   * Draw up an initial version of the view based on a bunch of info from the model.
+   * @param noteRange the range of notes in the song.
+   * @param noteStartingBeats map of beats to notes that start at that beat.
+   * @param noteContinuationBeats map of beats to notes that continue through that beat.
+   * @param songLength the length of the song in beats.
+   * @param tempo the tempo of the song in microseconds per beat.
    */
-  void initializeView(int tempo);
+  void initializeView(List<MusicNote> noteRange, Map<Integer, List<MusicNote>> noteStartingBeats,
+                      Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength,
+                      int tempo);
 
   /**
    * Initialize the view. To be used to pass a mock receiver for the MIDI testing.
    * @param tempo the tempo in microseconds per beat.
    * @param receiver a specific MidiReceiver to be used.
    */
-  void initializeView(int tempo, Receiver receiver);
+  void initializeView(List<MusicNote> noteRange, Map<Integer, List<MusicNote>> noteStartingBeats,
+                      Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength,
+                      int tempo, Receiver receiver);
 
   /**
-   * Command for the view to redraw itself. Takes in a bunch of info about the state of the model
-   * in order to perform its task.
-   * @param noteRange a list of notes from lowest to highest note.
-   * @param noteStartingBeats a map mapping each beat to a note that starts on it.
-   * @param noteContinuationBeats a map mapping each beat to a note that continues through it.
+   * Refreshes the view based on the beat the song is currently focused on.
+   * @param beat the beat to refresh the view around.
    */
-  void refresh(List<MusicNote> noteRange, Map<Integer, List<MusicNote>> noteStartingBeats,
-               Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength);
+  void refresh(int beat);
 }

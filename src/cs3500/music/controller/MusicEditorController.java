@@ -39,11 +39,12 @@ public class MusicEditorController implements IMusicEditorController {
   @Override
   public void runMusicEditor() {
     if (this.mockReceiver == null) {
-      this.view.initializeView(model.getTempo());
+      this.view.initializeView(model.noteRange(), model.noteStartingBeats(),
+              model.noteContinuationBeats(), model.getLength(), model.getTempo());
     } else {
-      this.view.initializeView(model.getTempo(), this.mockReceiver);
+      this.view.initializeView(model.noteRange(), model.noteStartingBeats(),
+              model.noteContinuationBeats(), model.getLength(), model.getTempo(),
+              this.mockReceiver);
     }
-    this.view.refresh(model.noteRange(), model.noteStartingBeats(),
-            model.noteContinuationBeats(), model.getLength());
   }
 }

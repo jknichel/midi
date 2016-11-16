@@ -16,18 +16,23 @@ public class MusicEditorConsoleView implements IMusicEditorView {
   final Appendable out = System.out;
 
   @Override
-  public void initializeView(int tempo) {
-    // For a console view, there's no initialization needed. Just start writing to System.out.
+  public void refresh(int beat) {
+    // For a console view, there's no refresh needed. Just start writing to System.out.
   }
 
   @Override
-  public void initializeView(int tempo, Receiver receiver) {
+  public void initializeView(List<MusicNote> noteRange,
+                             Map<Integer, List<MusicNote>> noteStartingBeats,
+                             Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength,
+                             int tempo, Receiver receiver) {
     throw new IllegalArgumentException("This constructor can't be used for this view.");
   }
 
   @Override
-  public void refresh(List<MusicNote> noteRange, Map<Integer, List<MusicNote>> noteStartingBeats,
-                      Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength) {
+  public void initializeView(List<MusicNote> noteRange,
+                             Map<Integer, List<MusicNote>> noteStartingBeats,
+                             Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength,
+                             int tempo) {
     // figure out how many spaces we need to pad to, based on the total number of beats in song
     int lengthToPadNotes = String.valueOf(songLength).length();
     try {
