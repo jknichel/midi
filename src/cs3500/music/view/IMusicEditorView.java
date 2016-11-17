@@ -25,15 +25,6 @@ public interface IMusicEditorView {
                       int tempo);
 
   /**
-   * Initialize the view. To be used to pass a mock receiver for the MIDI testing.
-   * @param tempo the tempo in microseconds per beat.
-   * @param receiver a specific MidiReceiver to be used.
-   */
-  void initializeView(List<MusicNote> noteRange, Map<Integer, List<MusicNote>> noteStartingBeats,
-                      Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength,
-                      int tempo, Receiver receiver);
-
-  /**
    * Refreshes the view based on the beat the song is currently focused on.
    * @param beat the beat to refresh the view around.
    */

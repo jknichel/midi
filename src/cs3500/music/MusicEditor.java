@@ -34,11 +34,11 @@ public class MusicEditor {
       CompositionBuilder<Song> builder = new Song.Builder();
       IMusicEditorModel model = MusicReader.parseFile(fileReader, builder);
       if (args[1].equalsIgnoreCase("console") || args[1].equalsIgnoreCase("midi")) {
-        IMusicEditorView view = new MusicViewCreator().create(args[1]);
+        IMusicEditorView view = MusicViewCreator.create(args[1]);
         IMusicEditorController controller = new MusicEditorController(model, view);
         controller.runMusicEditor();
       } else {
-        GuiView view = (GuiView) new MusicViewCreator().create(args[1]);
+        GuiView view = (GuiView) MusicViewCreator.create(args[1]);
         IMusicEditorController controller = new GuiViewController(model, view);
         controller.runMusicEditor();
       }

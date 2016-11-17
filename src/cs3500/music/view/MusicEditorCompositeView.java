@@ -5,14 +5,16 @@ import java.awt.event.MouseListener;
 import java.util.List;
 import java.util.Map;
 
-import javax.sound.midi.Receiver;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
+import javax.sound.midi.Sequencer;
 
 import cs3500.music.model.MusicNote;
 
 public class MusicEditorCompositeView implements GuiView {
   private GuiView gui = new MusicEditorGuiView();
   private MidiView midi = new MidiView();
-  private boolean paused = false;
+  private Sequencer sequencer;
 
 
   @Override
@@ -36,13 +38,6 @@ public class MusicEditorCompositeView implements GuiView {
   }
 
   @Override
-  public void update() {
-    if (!this.paused) {
-      this.gui.update();
-    }
-  }
-
-  @Override
   public void refresh(int beat) {
     this.gui.refresh(beat);
     this.midi.refresh(beat);
@@ -52,18 +47,22 @@ public class MusicEditorCompositeView implements GuiView {
   public void initializeView(List<MusicNote> noteRange,
                              Map<Integer, List<MusicNote>> noteStartingBeats,
                              Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength,
-                             int tempo, Receiver receiver) {
-    throw new IllegalArgumentException("This constructor can't be used for this view.");
-  }
-
-  @Override
-  public void initializeView(List<MusicNote> noteRange,
-                             Map<Integer, List<MusicNote>> noteStartingBeats,
-                             Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength,
                              int tempo) {
+    try {
+      this.sequencer = MidiSystem.getSequencer();
+    } catch (MidiUnavailableException e) {
+      e.printStackTrace();
+    }
     this.gui.initializeView(noteRange, noteStartingBeats, noteContinuationBeats, songLength,
             tempo);
     this.midi.initializeView(noteRange, noteStartingBeats, noteContinuationBeats, songLength,
-            tempo);
+            tempo, this.sequencer);
+    this.sequencer.addMetaEventListener(meta -> {
+      if (meta.getType() == 47) {
+        sequencer.close();
+      } else if (meta.getType() == 6) {
+        refresh((int) sequencer.getTickPosition());
+      }
+    });
   }
 }

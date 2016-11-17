@@ -36,17 +36,9 @@ public class GuiViewController implements IMusicEditorController {
     this.isPaused = !this.isPaused;
   };
 
-  private void tick() {
-    // not sure yet how to make this call update at a constant rate based on the tempo
-    if (!isPaused) {
-      this.view.update();
-    }
-  }
-
   @Override
   public void runMusicEditor() {
     this.view.initializeView(model.noteRange(), model.noteStartingBeats(),
             model.noteContinuationBeats(), model.getLength(), this.model.getTempo());
-    this.tick();
   }
 }

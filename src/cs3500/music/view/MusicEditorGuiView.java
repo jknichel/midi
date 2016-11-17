@@ -1,13 +1,11 @@
 package cs3500.music.view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.util.List;
 import java.util.Map;
 
-import javax.sound.midi.Receiver;
 import javax.swing.*;
 
 import cs3500.music.model.MusicNote;
@@ -22,16 +20,6 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
   static int currentBeat;
 
   @Override
-  public void pause() {
-
-  }
-
-  @Override
-  public void resume() {
-
-  }
-
-  @Override
   public void addKeyListener(KeyListener k) {
     this.frame.addKeyListener(k);
   }
@@ -42,16 +30,18 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
   }
 
   @Override
-  public void removeMouseListener(MouseListener m) {
-    this.panel.removeMouseListener(m);
+  public void pause() {
+    return;
   }
 
-  public void update() {
-    currentBeat++;
-    // if the beat gets to the end of the screen, scroll right
-    if (currentBeat * 20 >= this.frame.getBounds().getSize().getWidth() - 40) {
-      this.scroller.getHorizontalScrollBar().setValue(currentBeat * 20);
-    }
+  @Override
+  public void resume() {
+    return;
+  }
+
+  @Override
+  public void removeMouseListener(MouseListener m) {
+    this.panel.removeMouseListener(m);
   }
 
   /**
@@ -93,15 +83,10 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
 
   @Override
   public void refresh(int beat) {
-    // Going to need to adjust the red line here, at some point...
-  }
-
-  @Override
-  public void initializeView(List<MusicNote> noteRange,
-                             Map<Integer, List<MusicNote>> noteStartingBeats,
-                             Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength,
-                             int temp, Receiver receiver) {
-    throw new IllegalArgumentException("This constructor can't be used for this view.");
+    currentBeat = beat;
+    if (currentBeat * 20 >= this.frame.getBounds().getSize().getWidth() - 40) {
+      this.scroller.getHorizontalScrollBar().setValue(currentBeat * 20 + 7);
+    }
   }
 
   @Override
