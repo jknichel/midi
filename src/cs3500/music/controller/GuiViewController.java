@@ -1,5 +1,6 @@
 package cs3500.music.controller;
 
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +10,6 @@ import cs3500.music.view.GuiView;
 public class GuiViewController implements IMusicEditorController {
   private IMusicEditorModel model;
   private GuiView view;
-  private boolean isPaused = false;
 
   public GuiViewController(IMusicEditorModel model, GuiView view) {
     this.model = model;
@@ -28,13 +28,23 @@ public class GuiViewController implements IMusicEditorController {
     k.setKeyPressedMap(keyPresses);
     k.setKeyReleasedMap(keyReleases);
 
+    keyPresses.put(KeyEvent.VK_SPACE, new PausePlay());
+    keyPresses.put(KeyEvent.VK_E, new EditScreen());
+
     view.addKeyListener(k);
   }
 
-  private final Runnable pause = () -> {
-    this.view.pause();
-    this.isPaused = !this.isPaused;
-  };
+  class PausePlay implements Runnable {
+    public void run() {
+      view.pauseResume();
+    }
+  }
+
+  class EditScreen implements Runnable {
+    public void run() {
+      view.showEditScreen();
+    }
+  }
 
   @Override
   public void runMusicEditor() {

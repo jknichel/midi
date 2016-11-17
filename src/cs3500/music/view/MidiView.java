@@ -117,6 +117,7 @@ public class MidiView implements IMidiView {
   @Override
   public void resume() {
     this.sequencer.start();
+    this.sequencer.setTempoInMPQ(this.tempo);
   }
 
   private void addNoteToTrack(int beat, MusicNote note) {

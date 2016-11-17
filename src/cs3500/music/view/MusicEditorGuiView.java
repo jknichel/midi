@@ -1,12 +1,15 @@
 package cs3500.music.view;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import cs3500.music.model.MusicNote;
 
@@ -16,7 +19,16 @@ import cs3500.music.model.MusicNote;
 public class MusicEditorGuiView extends JPanel implements GuiView {
   private final JFrame frame = new JFrame("Music Editor - Justin Knichel | Ben Brody");
   private final JPanel panel = new JPanel(new BorderLayout());
+
+  private final JFrame editFrame = new JFrame("Edit");
+  private final JPanel editPanel = new JPanel(new BorderLayout());
+  private final JTextField editField = new JTextField();
+  private final JButton addNote = new JButton("+");
+  private final JButton removeNote = new JButton("-");
+
+  private final JPanel buttons = new JPanel();
   private final JScrollPane scroller = new JScrollPane(panel);
+
   static int currentBeat;
 
   @Override
@@ -36,6 +48,11 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
 
   @Override
   public void resume() {
+    return;
+  }
+
+  @Override
+  public void pauseResume() {
     return;
   }
 
@@ -90,12 +107,21 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
     }
   }
 
+  public void showEditScreen() {
+    if (this.editFrame.isVisible()) {
+      this.editFrame.setVisible(false);
+    } else {
+      this.editFrame.setVisible(true);
+    }
+  }
+
   @Override
   public void initializeView(List<MusicNote> noteRange,
                              Map<Integer, List<MusicNote>> noteStartingBeats,
                              Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength,
                              int tempo) {
     this.frame.setVisible(true);
+    this.editFrame.setVisible(false);
 
     Box pitches = drawPitches(noteRange);
     Box beats = drawBeats(songLength);
@@ -109,7 +135,6 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
     im.put(KeyStroke.getKeyStroke("DOWN"), "positiveUnitIncrement");
     im.put(KeyStroke.getKeyStroke("UP"), "negativeUnitIncrement");
 
-
     this.scroller.getHorizontalScrollBar().setUnitIncrement(16);
     im = this.scroller.getHorizontalScrollBar().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
     im.put(KeyStroke.getKeyStroke("RIGHT"), "positiveUnitIncrement");
@@ -117,9 +142,34 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
     im.put(KeyStroke.getKeyStroke("HOME"), "minScroll");
     im.put(KeyStroke.getKeyStroke("END"), "maxScroll");
 
+    this.buttons.setLayout(new FlowLayout(FlowLayout.LEFT));
+    this.buttons.add(addNote);
+    this.buttons.add(removeNote);
+
     this.panel.add(pitches, BorderLayout.WEST);
     this.panel.add(beats, BorderLayout.NORTH);
     this.panel.add(grid, BorderLayout.CENTER);
+
+    this.addNote.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        String input = editField.getText();
+      }
+    });
+
+    this.removeNote.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        String input = editField.getText();
+      }
+    });
+
+    this.editPanel.add(this.buttons, BorderLayout.SOUTH);
+    this.editPanel.add(this.editField, BorderLayout.NORTH);
+
+    this.editFrame.add(this.editPanel);
+    this.editFrame.setLocation(100,100);
+    this.editFrame.setSize(250, 100);
 
     this.frame.add(this.scroller);
     this.frame.setLocation(50, 50);

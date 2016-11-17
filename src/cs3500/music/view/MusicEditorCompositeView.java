@@ -16,7 +16,6 @@ public class MusicEditorCompositeView implements GuiView {
   private MidiView midi = new MidiView();
   private Sequencer sequencer;
 
-
   @Override
   public void addKeyListener(KeyListener k) {
     this.gui.addKeyListener(k);
@@ -35,6 +34,18 @@ public class MusicEditorCompositeView implements GuiView {
   @Override
   public void resume() {
     this.midi.resume();
+  }
+
+  public void pauseResume() {
+    if (this.sequencer.isRunning()) {
+      pause();
+    } else {
+      resume();
+    }
+  }
+
+  public void showEditScreen() {
+    this.gui.showEditScreen();
   }
 
   @Override

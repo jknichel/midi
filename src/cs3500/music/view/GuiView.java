@@ -15,4 +15,8 @@ public interface GuiView extends IMusicEditorView {
   void pause();
 
   void resume();
+
+  void pauseResume();
+
+  void showEditScreen();
 }
