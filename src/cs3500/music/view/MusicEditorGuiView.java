@@ -84,8 +84,8 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
   @Override
   public void refresh(int beat) {
     currentBeat = beat;
-    if ((currentBeat * 20) % (this.frame.getBounds().getSize().getWidth() - 40) >
-            ((currentBeat + 1) * 20) % (this.frame.getBounds().getSize().getWidth() - 40)) {
+    if ((currentBeat > 20) && (currentBeat * 20) %
+            (this.frame.getBounds().getSize().getWidth() - 40) < 20) {
       this.scroller.getHorizontalScrollBar().setValue(currentBeat * 20 + 7);
     }
   }
