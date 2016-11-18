@@ -36,6 +36,7 @@ public class MusicEditorCompositeView implements GuiView {
     this.midi.resume();
   }
 
+  @Override
   public void pauseResume() {
     if (this.sequencer.isRunning()) {
       pause();
@@ -44,6 +45,7 @@ public class MusicEditorCompositeView implements GuiView {
     }
   }
 
+  @Override
   public void showEditScreen() {
     this.gui.showEditScreen();
   }

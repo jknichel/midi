@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,8 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
   private final JPanel buttons = new JPanel();
   private final JScrollPane scroller = new JScrollPane(panel);
 
+  private List<String> addNoteQueue = new ArrayList<>();
+  private List<String> removeNoteQueue = new ArrayList<>();
   static int currentBeat;
 
   @Override
@@ -43,17 +46,14 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
 
   @Override
   public void pause() {
-    return;
   }
 
   @Override
   public void resume() {
-    return;
   }
 
   @Override
   public void pauseResume() {
-    return;
   }
 
   @Override
@@ -107,6 +107,9 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
     }
   }
 
+  /**
+   * Shows the edit screen for adding and removing notes.
+   */
   public void showEditScreen() {
     if (this.editFrame.isVisible()) {
       this.editFrame.setVisible(false);
@@ -150,18 +153,14 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
     this.panel.add(beats, BorderLayout.NORTH);
     this.panel.add(grid, BorderLayout.CENTER);
 
-    this.addNote.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent actionEvent) {
-        String input = editField.getText();
-      }
+    this.addNote.addActionListener(actionEvent -> {
+      String input = editField.getText();
+      addNoteQueue.add(input);
     });
 
-    this.removeNote.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent actionEvent) {
-        String input = editField.getText();
-      }
+    this.removeNote.addActionListener(actionEvent -> {
+      String input = editField.getText();
+      removeNoteQueue.add(input);
     });
 
     this.editPanel.add(this.buttons, BorderLayout.SOUTH);

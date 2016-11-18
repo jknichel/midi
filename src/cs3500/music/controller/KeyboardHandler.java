@@ -8,19 +8,15 @@ public class KeyboardHandler implements KeyListener {
   private Map<Character, Runnable> keyTypedMap;
   private Map<Integer, Runnable> keyPressedMap, keyReleasedMap;
 
-  public KeyboardHandler() {
-
-  }
-
-  public void setKeyTypedMap(Map<Character, Runnable> map) {
+  void setKeyTypedMap(Map<Character, Runnable> map) {
     keyTypedMap = map;
   }
 
-  public void setKeyPressedMap(Map<Integer, Runnable> map) {
+  void setKeyPressedMap(Map<Integer, Runnable> map) {
     keyPressedMap = map;
   }
 
-  public void setKeyReleasedMap(Map<Integer, Runnable> map) {
+  void setKeyReleasedMap(Map<Integer, Runnable> map) {
     keyReleasedMap = map;
   }
 
