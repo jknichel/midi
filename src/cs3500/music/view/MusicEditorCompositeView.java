@@ -62,6 +62,11 @@ public class MusicEditorCompositeView implements GuiView {
   }
 
   @Override
+  public void showWarningScreen(String text) {
+    this.gui.showWarningScreen(text);
+  }
+
+  @Override
   public String getEditText() {
     return this.gui.getEditText();
   }

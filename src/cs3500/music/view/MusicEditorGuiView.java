@@ -18,16 +18,33 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
   private final JFrame frame = new JFrame("Music Editor - Justin Knichel | Ben Brody");
   private final JPanel panel = new JPanel(new BorderLayout());
 
+  private final JFrame warningFrame = new JFrame("Invalid Note Input");
+  private final JPanel warningPanel = new JPanel(new BorderLayout());
+  private final JLabel warningLabel = new JLabel("", SwingConstants.CENTER);
+  private final JButton closeWarning = new JButton("Got it!");
+
   private final JFrame editFrame = new JFrame("Edit");
   private final JPanel editPanel = new JPanel(new BorderLayout());
   private final JTextField editField = new JTextField();
   private final JButton addNote = new JButton("+");
   private final JButton removeNote = new JButton("-");
 
+  private final JLabel exampleInput =
+          new JLabel("<html>Add note format: start end instrument pitch octave volume<br>" +
+                  "     e.g. 1 5 2 C 4 5<br>" +
+                  "Remove note format: start pitch octave<br>" +
+                  "     e.g. 5 d 4</html>", SwingConstants.CENTER);
+  private Font italics = new Font(exampleInput.getFont().getName(), Font.ITALIC,
+          exampleInput.getFont().getSize());
+
   private final JPanel buttons = new JPanel();
   private final JScrollPane scroller = new JScrollPane(panel);
 
   static int currentBeat;
+
+  public MusicEditorGuiView() {
+    this.warningFrame.setVisible(false);
+  }
 
   @Override
   public void addKeyListener(KeyListener k) {
@@ -108,11 +125,18 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
    * Shows the edit screen for adding and removing notes.
    */
   public void showEditScreen() {
-    if (this.editFrame.isVisible()) {
-      this.editFrame.setVisible(false);
-    } else {
-      this.editFrame.setVisible(true);
-    }
+    this.exampleInput.setFont(italics);
+    this.editFrame.setVisible(true);
+  }
+
+  /**
+   * Shows the warning screen if the user enters invalid input.
+   *
+   * @param text the warning message to display on the warning screen
+   */
+  public void showWarningScreen(String text) {
+    this.warningLabel.setText(text);
+    this.warningFrame.setVisible(true);
   }
 
   @Override
@@ -150,12 +174,22 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
     this.panel.add(beats, BorderLayout.NORTH);
     this.panel.add(grid, BorderLayout.CENTER);
 
+    this.closeWarning.addActionListener(actionEvent -> warningFrame.dispose());
+    this.warningFrame.toFront();
+
+    this.warningPanel.add(warningLabel, BorderLayout.NORTH);
+    this.warningPanel.add(closeWarning, BorderLayout.SOUTH);
+    this.warningFrame.add(this.warningPanel);
+    this.warningFrame.setLocation(200, 200);
+    this.warningFrame.setSize(300, 100);
+
     this.editPanel.add(this.buttons, BorderLayout.SOUTH);
     this.editPanel.add(this.editField, BorderLayout.NORTH);
+    this.editPanel.add(this.exampleInput, BorderLayout.CENTER);
 
     this.editFrame.add(this.editPanel);
-    this.editFrame.setLocation(100,100);
-    this.editFrame.setSize(250, 100);
+    this.editFrame.setLocation(100, 100);
+    this.editFrame.setSize(400, 200);
 
     this.frame.add(this.scroller);
     this.frame.setLocation(50, 50);

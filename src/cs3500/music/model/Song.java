@@ -101,6 +101,9 @@ public class Song implements IMusicEditorModel {
   @Override
   public void addNote(int start, int end, int instrument, Pitches pitch, int octave,
                          int volume) {
+    if (end < start) {
+      throw new IllegalArgumentException("Entered note ends before its starting time!");
+    }
     List<MusicNote> tempList;
     int duration = end - start + 1;
     MusicNote noteToAdd = new MusicNote(pitch, octave, instrument, volume, duration);

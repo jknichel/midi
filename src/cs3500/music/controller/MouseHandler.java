@@ -5,9 +5,6 @@ import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Map;
 
-// mouse motion listener for dragging (if we wanted to create notes by dragging the cursor from
-// start beat to end beat
-
 public class MouseHandler implements MouseListener {
   private Map<Integer, Runnable> clickedMap = new HashMap<>();
   private Map<Integer, Runnable> pressedMap = new HashMap<>();

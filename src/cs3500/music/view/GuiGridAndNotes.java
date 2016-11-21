@@ -73,7 +73,12 @@ public class GuiGridAndNotes extends JPanel {
     }
   }
 
-  public void drawCurrentBeatLine(int currentBeat, Graphics g) {
+  /**
+   * Draws the current beat line of the song.
+   * @param currentBeat the current beat to draw the line on
+   * @param g the graphics with which to displlay the line
+   */
+  private void drawCurrentBeatLine(int currentBeat, Graphics g) {
     g.setColor(Color.red);
     g.drawLine(currentBeat * 20 + 7, 6, currentBeat * 20 + 7, noteRange.size() * 20 + 3);
   }
@@ -91,6 +96,7 @@ public class GuiGridAndNotes extends JPanel {
       int k = e.getKey();
       int x = k * BOX_WIDTH + 8;
       for (MusicNote songNote : e.getValue()) {
+        songNote.getInstrument();
         int d = songNote.getTotalDuration() - 1;
         for (MusicNote rangeNote : noteRange) {
           if (rangeNote.getPitch() == songNote.getPitch()

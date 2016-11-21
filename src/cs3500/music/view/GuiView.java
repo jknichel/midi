@@ -78,4 +78,10 @@ public interface GuiView extends IMusicEditorView {
    * @return string representing the user's input.
    */
   String getEditText();
+
+  /**
+   * Shows a warning screen if the user inputs invalid text for a note.
+   * @param text the error message to display with the warning screen
+   */
+  void showWarningScreen(String text);
 }
