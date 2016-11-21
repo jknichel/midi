@@ -96,7 +96,9 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
   @Override
   public void refresh(int beat) {
     currentBeat = beat;
-    if ((currentBeat > 20) && (currentBeat * 20) %
+    if (currentBeat == 0) {
+      this.scroller.getHorizontalScrollBar().setValue(0);
+    } else if ((currentBeat > 20) && (currentBeat * 20) %
             (this.frame.getBounds().getSize().getWidth() - 40) < 20) {
       this.scroller.getHorizontalScrollBar().setValue(currentBeat * 20 + 7);
     }
@@ -148,16 +150,6 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
     this.panel.add(beats, BorderLayout.NORTH);
     this.panel.add(grid, BorderLayout.CENTER);
 
-    this.addNote.addActionListener(actionEvent -> {
-      String input = editField.getText();
-      addNoteQueue.add(input);
-    });
-
-    this.removeNote.addActionListener(actionEvent -> {
-      String input = editField.getText();
-      removeNoteQueue.add(input);
-    });
-
     this.editPanel.add(this.buttons, BorderLayout.SOUTH);
     this.editPanel.add(this.editField, BorderLayout.NORTH);
 
@@ -172,6 +164,14 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
     this.frame.setBackground(Color.WHITE);
     this.frame.add(scroller);
     this.refresh(0);
+  }
+
+  @Override
+  public void redrawForSongChange(List<MusicNote> noteRange, Map<Integer, List<MusicNote>> noteStartingBeats,
+                           Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength,
+                           int tempo) {
+    this.panel.removeAll();
+    initializeView(noteRange, noteStartingBeats, noteContinuationBeats, songLength, tempo);
   }
 
   @Override

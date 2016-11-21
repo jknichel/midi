@@ -86,9 +86,41 @@ public class MusicEditorCompositeView implements GuiView {
             tempo);
     this.midi.initializeView(noteRange, noteStartingBeats, noteContinuationBeats, songLength,
             tempo, this.sequencer);
+    addRedLineTrackerListener();
+  }
+
+  @Override
+  public void redrawForSongChange(List<MusicNote> noteRange, Map<Integer, List<MusicNote>> noteStartingBeats,
+                           Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength,
+                           int tempo) {
+    long currentTick = this.sequencer.getTickPosition();
+    try {
+      this.sequencer = MidiSystem.getSequencer();
+    } catch (MidiUnavailableException e) {
+      e.printStackTrace();
+    }
+    this.gui.redrawForSongChange(noteRange, noteStartingBeats, noteContinuationBeats, songLength,
+            tempo);
+    this.midi.initializeView(noteRange, noteStartingBeats, noteContinuationBeats, songLength,
+            tempo, this.sequencer);
+    if (currentTick > this.sequencer.getTickLength()) {
+      currentTick = this.sequencer.getTickLength();
+    }
+    this.sequencer.setTickPosition(currentTick);
+    this.refresh((int) this.sequencer.getTickPosition());
+    addRedLineTrackerListener();
+  }
+
+  /**
+   * A method to add the MetaEventListener to the sequencer so that the GUI view can tell when the
+   * Midi playback moves to another beat.
+   */
+  private void addRedLineTrackerListener() {
     this.sequencer.addMetaEventListener(meta -> {
       if (meta.getType() == 47) {
-        sequencer.close();
+        this.sequencer.setTickPosition(0);
+        pause();
+        refresh((int) this.sequencer.getTickPosition());
       } else if (meta.getType() == 6) {
         refresh((int) sequencer.getTickPosition());
       }

@@ -27,6 +27,22 @@ public interface IMidiView extends IMusicEditorView {
                       Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength,
                       int tempo, Sequencer sequencer);
 
+
+  /**
+   * A method to redraw the entire view in the event that the composition has been edited (i.e. a
+   * note has been added or removed, etc).
+   * @param noteRange range of notes in the song.
+   * @param noteStartingBeats map from beat to notes that start on that beat.
+   * @param noteContinuationBeats map from beat to notes that continue through that beat.
+   * @param songLength the length of the song in beats.
+   * @param tempo the tempo in microseconds per beat.
+   * @param tick the sequencer tick that playback is currently on.
+   *
+  void redrawForSongChange(List<MusicNote> noteRange,
+                           Map<Integer, List<MusicNote>> noteStartingBeats,
+                           Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength,
+                           int tempo, long tick);*/
+
   /**
    * Initialize the view. To be used to pass a mock receiver for the MIDI testing.
    * @param noteRange the range of notes in the song.

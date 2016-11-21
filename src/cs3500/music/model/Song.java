@@ -169,7 +169,7 @@ public class Song implements IMusicEditorModel {
       }
     }
 
-    if (start + noteToRemove.getTotalDuration() == this.length) {
+    if (start + noteToRemove.getTotalDuration() >= this.length) {
       updateLength();
     }
   }

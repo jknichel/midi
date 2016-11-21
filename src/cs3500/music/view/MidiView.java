@@ -90,8 +90,6 @@ public class MidiView implements IMidiView {
       }
 
       this.sequencer.setSequence(this.sequence);
-      this.sequencer.setTempoInMPQ(tempo);
-      this.sequencer.start();
     } catch (MidiUnavailableException | InvalidMidiDataException e) {
       e.printStackTrace();
     }

@@ -70,13 +70,13 @@ public class GuiViewController implements IMusicEditorController {
 
     this.view.plugInAddNoteActionListener(actionEvent -> {
       addNote(this.view.getEditText());
-      this.view.initializeView(model.noteRange(), model.noteStartingBeats(),
+      this.view.redrawForSongChange(model.noteRange(), model.noteStartingBeats(),
               model.noteContinuationBeats(), model.getLength(), model.getTempo());
     });
 
     this.view.plugInRemoveNoteActionListener(actionEvent -> {
       removeNote(this.view.getEditText());
-      this.view.initializeView(model.noteRange(), model.noteStartingBeats(),
+      this.view.redrawForSongChange(model.noteRange(), model.noteStartingBeats(),
               model.noteContinuationBeats(), model.getLength(), model.getTempo());
     });
   }
