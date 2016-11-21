@@ -27,50 +27,6 @@ public class GuiViewController implements IMusicEditorController {
   }
 
   /**
-   * Add the notes from the add-note queue to the model.
-   */
-  private void addNotes() {
-    for (String s : GuiView.addNoteQueue) {
-      System.out.println(s);
-      String[] a = s.split(" ");
-
-      Pitches pitch = null;
-      for (Pitches p : Pitches.values()) {
-        if (a[0].equals(p.toString())) {
-          pitch = p;
-        }
-      }
-      int octave = Integer.valueOf(a[1]);
-      int start = Integer.valueOf(a[2]);
-      int end = Integer.valueOf(a[3]);
-      int instrument = Integer.valueOf(a[4]);
-      int volume = Integer.valueOf(a[5]);
-
-      this.model.addNote(start, end, instrument, pitch, octave, volume);
-    }
-  }
-
-  /**
-   * Remove the notes from model that are present in the remove-note queue.
-   */
-  private void removeNotes(){
-    for (String s : GuiView.removeNoteQueue){
-      String[] a = s.split(" ");
-
-      Pitches pitch = null;
-      for (Pitches p : Pitches.values()) {
-        if (a[0].equals(p.toString())) {
-          pitch = p;
-        }
-      }
-      int start = Integer.valueOf(a[1]);
-      int octave = Integer.valueOf(a[2]);
-
-      this.model.removeNote(start, pitch, octave);
-    }
-  }
-
-  /**
    * Adds a keyboard listener to the controller to listen for key inputs.
    */
   private void addKeyboardListener() {
@@ -111,5 +67,48 @@ public class GuiViewController implements IMusicEditorController {
   public void runMusicEditor() {
     this.view.initializeView(model.noteRange(), model.noteStartingBeats(),
             model.noteContinuationBeats(), model.getLength(), this.model.getTempo());
+
+    this.view.plugInAddNoteActionListener(actionEvent -> {
+      addNote(this.view.getEditText());
+      this.view.initializeView(model.noteRange(), model.noteStartingBeats(),
+              model.noteContinuationBeats(), model.getLength(), model.getTempo());
+    });
+
+    this.view.plugInRemoveNoteActionListener(actionEvent -> {
+      removeNote(this.view.getEditText());
+      this.view.initializeView(model.noteRange(), model.noteStartingBeats(),
+              model.noteContinuationBeats(), model.getLength(), model.getTempo());
+    });
+  }
+
+  /**
+   * Method to be called when the Add Note action gets triggered by the view. Takes in a text input
+   * field and splits it based on spaces.
+   * @param input the input text to translate into a note to add.
+   */
+  private void addNote(String input) {
+    String[] fields = input.split(" ");
+    int start = Integer.valueOf(fields[0]);
+    int end = Integer.valueOf(fields[1]);
+    int instrument = Integer.valueOf(fields[2]);
+    Pitches pitch = Pitches.C.getPitchFromScaleIndex(Integer.valueOf(fields[3]));
+    int octave = Integer.valueOf(fields[4]);
+    int volume = Integer.valueOf(fields[5]);
+
+    this.model.addNote(start, end, instrument, pitch, octave, volume);
+  }
+
+  /**
+   * Method to be called when the Remove Note action gets triggered by the view. Takes in a text
+   * input field and splits it based on spaces.
+   * @param input the input text to translate into a note to remove.
+   */
+  private void removeNote(String input) {
+    String[] fields = input.split(" ");
+    int start = Integer.valueOf(fields[0]);
+    Pitches pitch = Pitches.C.getPitchFromScaleIndex(Integer.valueOf(fields[1]));
+    int octave = Integer.valueOf(fields[2]);
+
+    this.model.removeNote(start, pitch, octave);
   }
 }

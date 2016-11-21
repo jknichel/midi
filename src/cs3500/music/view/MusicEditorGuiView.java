@@ -1,16 +1,13 @@
 package cs3500.music.view;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import cs3500.music.model.MusicNote;
 
@@ -30,8 +27,6 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
   private final JPanel buttons = new JPanel();
   private final JScrollPane scroller = new JScrollPane(panel);
 
-  private List<String> addNoteQueue = new ArrayList<>();
-  private List<String> removeNoteQueue = new ArrayList<>();
   static int currentBeat;
 
   @Override
@@ -177,5 +172,20 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
     this.frame.setBackground(Color.WHITE);
     this.frame.add(scroller);
     this.refresh(0);
+  }
+
+  @Override
+  public void plugInAddNoteActionListener(ActionListener listener) {
+    this.addNote.addActionListener(listener);
+  }
+
+  @Override
+  public void plugInRemoveNoteActionListener(ActionListener listener) {
+    this.removeNote.addActionListener(listener);
+  }
+
+  @Override
+  public String getEditText() {
+    return editField.getText();
   }
 }

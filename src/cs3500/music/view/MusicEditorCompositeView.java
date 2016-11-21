@@ -1,5 +1,6 @@
 package cs3500.music.view;
 
+import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.util.List;
@@ -27,6 +28,16 @@ public class MusicEditorCompositeView implements GuiView {
   }
 
   @Override
+  public void plugInAddNoteActionListener(ActionListener listener) {
+    this.gui.plugInAddNoteActionListener(listener);
+  }
+
+  @Override
+  public void plugInRemoveNoteActionListener(ActionListener listener) {
+    this.gui.plugInRemoveNoteActionListener(listener);
+  }
+
+  @Override
   public void pause() {
     this.midi.pause();
   }
@@ -48,6 +59,11 @@ public class MusicEditorCompositeView implements GuiView {
   @Override
   public void showEditScreen() {
     this.gui.showEditScreen();
+  }
+
+  @Override
+  public String getEditText() {
+    return this.gui.getEditText();
   }
 
   @Override

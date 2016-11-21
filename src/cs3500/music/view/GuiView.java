@@ -1,5 +1,6 @@
 package cs3500.music.view;
 
+import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -15,6 +16,20 @@ public interface GuiView extends IMusicEditorView {
    * @param k the key listener to add to the view
    */
   void addKeyListener(KeyListener k);
+
+  /**
+   * Allow a controller to plug-in an ActionListener to the view's button/whatever that adds a
+   * note.
+   * @param listener the listener to plug into the "Add Note" button/etc.
+   */
+  void plugInAddNoteActionListener(ActionListener listener);
+
+  /**
+   * Allow a controller to plug-in an ActionListener to the view's button/whatever that removes a
+   * note.
+   * @param listener
+   */
+  void plugInRemoveNoteActionListener(ActionListener listener);
 
   /**
    * Adds a mouse listener to the view.
@@ -42,6 +57,8 @@ public interface GuiView extends IMusicEditorView {
    * Shows the edit screen for the view.
    */
   void showEditScreen();
+
+  String getEditText();
 
   /**
    * The list of notes to be added to a piece of music.
