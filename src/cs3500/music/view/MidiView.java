@@ -1,7 +1,9 @@
 package cs3500.music.view;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MetaMessage;
@@ -26,11 +28,6 @@ public class MidiView implements IMidiView {
    * Stores the tempo of the song microseconds per beat.
    */
   private int tempo;
-
-  /**
-   * Holds a special receiver, only used for testing for now.
-   */
-  private Receiver receiver;
 
   /**
    * The sequencer to be used for track construction and playback.
@@ -95,29 +92,6 @@ public class MidiView implements IMidiView {
     }
   }
 
-  @Override
-  public void refresh(int beat) {
-    return;
-  }
-
-  @Override
-  public void initializeView(List<MusicNote> noteRange,
-                             Map<Integer, List<MusicNote>> noteStartingBeats,
-                             Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength,
-                             int tempo, Receiver receiver) {
-  }
-
-  @Override
-  public void pause() {
-    this.sequencer.stop();
-  }
-
-  @Override
-  public void resume() {
-    this.sequencer.start();
-    this.sequencer.setTempoInMPQ(this.tempo);
-  }
-
   private void addNoteToTrack(int beat, MusicNote note) {
     ShortMessage onMsg = new ShortMessage();
     ShortMessage offMsg = new ShortMessage();
@@ -135,5 +109,32 @@ public class MidiView implements IMidiView {
     } catch (InvalidMidiDataException e) {
       e.printStackTrace();
     }
+  }
+
+  @Override
+  public void refresh(int beat) {
+    return;
+  }
+
+  @Override
+  public void pause() {
+    this.sequencer.stop();
+  }
+
+  @Override
+  public void resume() {
+    this.sequencer.start();
+    this.sequencer.setTempoInMPQ(this.tempo);
+  }
+
+  public List<ShortMessage> getNoteMessages() {
+    List<MidiEvent> events = new ArrayList<>();
+    for (int i = 0; i < this.track.size(); i++) {
+      events.add(this.track.get(i));
+    }
+    List<ShortMessage> noteMessages = events.stream().filter(event ->
+            event.getMessage().getStatus() != 255).map(event -> (ShortMessage) event.getMessage()).
+            collect(Collectors.toList());
+    return noteMessages;
   }
 }
