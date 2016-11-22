@@ -62,6 +62,36 @@ public class MusicEditorCompositeView implements GuiView {
   }
 
   @Override
+  public void upScroll() {
+    this.gui.upScroll();
+  }
+
+  @Override
+  public void downScroll() {
+    this.gui.downScroll();
+  }
+
+  @Override
+  public void leftScroll() {
+    this.gui.leftScroll();
+  }
+
+  @Override
+  public void rightScroll() {
+    this.gui.rightScroll();
+  }
+
+  @Override
+  public void homeKey() {
+    this.gui.homeKey();
+  }
+
+  @Override
+  public void endKey(int songLength) {
+    this.gui.endKey(songLength);
+  }
+
+  @Override
   public void showWarningScreen(String text) {
     this.gui.showWarningScreen(text);
   }

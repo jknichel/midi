@@ -74,6 +74,37 @@ public interface GuiView extends IMusicEditorView {
   void showEditScreen();
 
   /**
+   * Scroll up in the piece of music.
+   */
+  void upScroll();
+
+  /**
+   * Scroll down in the piece of music.
+   */
+  void downScroll();
+
+  /**
+   * Scroll left in the piece of music.
+   */
+  void leftScroll();
+
+  /**
+   * Scroll right in the piece of music.
+   */
+  void rightScroll();
+
+  /**
+   * Scroll to the beginning of the song.
+   */
+  void homeKey();
+
+  /**
+   * Scroll to the end of the song.
+   * @param songLength the length of the song to tell the scroller how far to go
+   */
+  void endKey(int songLength);
+
+  /**
    * How the view can return the arguments passed to it from the user for the controller to use.
    * @return string representing the user's input.
    */

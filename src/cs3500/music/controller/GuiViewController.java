@@ -42,8 +42,50 @@ public class GuiViewController implements IMusicEditorController {
 
     keyPresses.put(KeyEvent.VK_SPACE, new PausePlay());
     keyPresses.put(KeyEvent.VK_E, new EditScreen());
+    keyPresses.put(KeyEvent.VK_UP, new UpScroll());
+    keyPresses.put(KeyEvent.VK_DOWN, new DownScroll());
+    keyPresses.put(KeyEvent.VK_LEFT, new LeftScroll());
+    keyPresses.put(KeyEvent.VK_RIGHT, new RightScroll());
+    keyPresses.put(KeyEvent.VK_END, new EndKey());
+    keyPresses.put(KeyEvent.VK_HOME, new HomeKey());
 
     view.addKeyListener(k);
+  }
+
+  private final class UpScroll implements Runnable {
+    public void run() {
+      view.upScroll();
+    }
+  }
+
+  private final class DownScroll implements Runnable {
+    public void run() {
+      view.downScroll();
+    }
+  }
+
+  private final class LeftScroll implements Runnable {
+    public void run() {
+      view.leftScroll();
+    }
+  }
+
+  private final class RightScroll implements Runnable {
+    public void run() {
+      view.rightScroll();
+    }
+  }
+
+  private final class EndKey implements Runnable {
+    public void run() {
+      view.endKey(model.getLength());
+    }
+  }
+
+  private final class HomeKey implements Runnable {
+    public void run() {
+      view.homeKey();
+    }
   }
 
   /**

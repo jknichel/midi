@@ -42,7 +42,10 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
 
   static int currentBeat;
 
-  public MusicEditorGuiView() {
+  /**
+   * Constructs a GUI view for a music editor.
+   */
+  MusicEditorGuiView() {
     this.warningFrame.setVisible(false);
   }
 
@@ -66,6 +69,42 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
 
   @Override
   public void pauseResume() {
+  }
+
+  @Override
+  public void upScroll() {
+    this.scroller.getVerticalScrollBar().setValue(this.scroller.getVerticalScrollBar().getValue() -
+            this.scroller.getVerticalScrollBar().getUnitIncrement());
+  }
+
+  @Override
+  public void downScroll() {
+    this.scroller.getVerticalScrollBar().setValue(this.scroller.getVerticalScrollBar().getValue() +
+            this.scroller.getVerticalScrollBar().getUnitIncrement());
+  }
+
+  @Override
+  public void leftScroll() {
+    this.scroller.getHorizontalScrollBar().setValue(
+            this.scroller.getHorizontalScrollBar().getValue() -
+                    this.scroller.getHorizontalScrollBar().getUnitIncrement());
+  }
+
+  @Override
+  public void rightScroll() {
+    this.scroller.getHorizontalScrollBar().setValue(
+            this.scroller.getHorizontalScrollBar().getValue() +
+                    this.scroller.getHorizontalScrollBar().getUnitIncrement());
+  }
+
+  @Override
+  public void homeKey() {
+    this.scroller.getHorizontalScrollBar().setValue(0);
+  }
+
+  @Override
+  public void endKey(int songLength) {
+    this.scroller.getHorizontalScrollBar().setValue(7 + songLength * 20);
   }
 
   @Override
@@ -154,17 +193,7 @@ public class MusicEditorGuiView extends JPanel implements GuiView {
             songLength);
 
     this.scroller.getVerticalScrollBar().setUnitIncrement(16);
-    InputMap im = this.scroller.getVerticalScrollBar().
-            getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-    im.put(KeyStroke.getKeyStroke("DOWN"), "positiveUnitIncrement");
-    im.put(KeyStroke.getKeyStroke("UP"), "negativeUnitIncrement");
-
     this.scroller.getHorizontalScrollBar().setUnitIncrement(16);
-    im = this.scroller.getHorizontalScrollBar().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-    im.put(KeyStroke.getKeyStroke("RIGHT"), "positiveUnitIncrement");
-    im.put(KeyStroke.getKeyStroke("LEFT"), "negativeUnitIncrement");
-    im.put(KeyStroke.getKeyStroke("HOME"), "minScroll");
-    im.put(KeyStroke.getKeyStroke("END"), "maxScroll");
 
     this.buttons.setLayout(new FlowLayout(FlowLayout.LEFT));
     this.buttons.add(addNote);
