@@ -51,7 +51,7 @@ public class SongTest {
     assertEquals(song.getLength(), 6);
 
     song.removeNote(2, Pitches.G, 5);
-    assertEquals(song.getLength(), 6);
+    assertEquals(song.getLength(), 4);
 
     song.addNote(2, 6, 1, Pitches.G, 5, 10);
     song.removeNote(0, Pitches.C, 4);
