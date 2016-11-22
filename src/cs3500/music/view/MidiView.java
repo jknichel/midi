@@ -35,11 +35,6 @@ public class MidiView implements IMidiView {
   private Sequencer sequencer;
 
   /**
-   * The sequence to be used for track construction.
-   */
-  private Sequence sequence;
-
-  /**
    * The track that holds the notes of the song for playback.
    */
   private Track track;
@@ -59,6 +54,7 @@ public class MidiView implements IMidiView {
                              Map<Integer, List<MusicNote>> noteContinuationBeats, int songLength,
                              int tempo) {
     this.tempo = tempo;
+    boolean startImmediatly = false;
     try {
       if (this.sequencer == null) {
         this.sequencer = MidiSystem.getSequencer();
@@ -67,6 +63,7 @@ public class MidiView implements IMidiView {
             sequencer.close();
           }
         });
+        startImmediatly = true;
       }
       Transmitter seqTrans = sequencer.getTransmitter();
       Synthesizer synthesizer = MidiSystem.getSynthesizer();
@@ -74,7 +71,7 @@ public class MidiView implements IMidiView {
       seqTrans.setReceiver(receiver);
       synthesizer.open();
       sequencer.open();
-      this.sequence = new Sequence(Sequence.PPQ, 1);
+      Sequence sequence = new Sequence(Sequence.PPQ, 1);
       this.track = sequence.createTrack();
 
       for (int i = 0; i <= songLength; i++) {
@@ -86,7 +83,10 @@ public class MidiView implements IMidiView {
         }
       }
 
-      this.sequencer.setSequence(this.sequence);
+      this.sequencer.setSequence(sequence);
+      if (startImmediatly) {
+        resume();
+      }
     } catch (MidiUnavailableException | InvalidMidiDataException e) {
       e.printStackTrace();
     }

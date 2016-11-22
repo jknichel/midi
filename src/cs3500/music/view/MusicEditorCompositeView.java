@@ -13,8 +13,20 @@ import javax.sound.midi.Sequencer;
 import cs3500.music.model.MusicNote;
 
 public class MusicEditorCompositeView implements GuiView {
+  /**
+   * Holds the GuiView for this composite view.
+   */
   private GuiView gui = new MusicEditorGuiView();
+
+  /**
+   * Holds the MidiView for this composite view.
+   */
   private MidiView midi = new MidiView();
+
+  /**
+   * Holds the sequencer for this view to plug into the MidiView to keep sync between the two
+   * component views.
+   */
   private Sequencer sequencer;
 
   @Override

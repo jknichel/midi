@@ -52,36 +52,54 @@ public class GuiViewController implements IMusicEditorController {
     view.addKeyListener(k);
   }
 
+  /**
+   * Adds the UpScroll runnable to the view.
+   */
   private final class UpScroll implements Runnable {
     public void run() {
       view.upScroll();
     }
   }
 
+  /**
+   * Adds the DownScroll runnable to the view.
+   */
   private final class DownScroll implements Runnable {
     public void run() {
       view.downScroll();
     }
   }
 
+  /**
+   * Adds the LeftScroll runnable to the view.
+   */
   private final class LeftScroll implements Runnable {
     public void run() {
       view.leftScroll();
     }
   }
 
+  /**
+   * Adds the RightScroll runnable to the view.
+   */
   private final class RightScroll implements Runnable {
     public void run() {
       view.rightScroll();
     }
   }
 
+  /**
+   * Adds the EndKey runnable to the view.
+   */
   private final class EndKey implements Runnable {
     public void run() {
       view.endKey(model.getLength());
     }
   }
 
+  /**
+   * Adds the HomeKey runnable to the view.
+   */
   private final class HomeKey implements Runnable {
     public void run() {
       view.homeKey();
