@@ -18,9 +18,6 @@ public class MusicEditorController implements IMusicEditorController {
    */
   private IMusicEditorView view;
 
-
-  private IView providerView;
-
   /**
    * Public constructor based on a view and a model.
    * @param model the model to be used with this controller.
