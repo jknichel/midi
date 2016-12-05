@@ -18,7 +18,7 @@ public class Note {
   public Note(MusicNote note, int start) {
     this.tone = new Tone(note.getPitch(), note.getOctave());
     this.beat = start;
-    this.duration = note.getTotalDuration();
+    this.duration = note.getTotalDuration() - 1;
     this.instrument = note.getInstrument();
   }
 
@@ -32,10 +32,6 @@ public class Note {
 
   public int getDuration() {
     return duration;
-  }
-
-  public int getEndBeat() {
-    return beat + duration - 1;
   }
 
   public int getInstrument() {

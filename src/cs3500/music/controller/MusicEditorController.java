@@ -18,7 +18,6 @@ public class MusicEditorController implements IMusicEditorController {
    */
   private IMusicEditorView view;
 
-  private MusicEditorModel providerModel;
 
   private IView providerView;
 
@@ -30,16 +29,6 @@ public class MusicEditorController implements IMusicEditorController {
   public MusicEditorController(IMusicEditorModel model, IMusicEditorView view) {
     this.model = model;
     this.view = view;
-  }
-
-  public MusicEditorController(MusicEditorModel providerModel, IView providerView) {
-    this.providerModel = providerModel;
-    this.providerView = providerView;
-  }
-
-  @Override
-  public void runProviderEditor() {
-    this.providerView.initialize(providerModel);
   }
 
   @Override

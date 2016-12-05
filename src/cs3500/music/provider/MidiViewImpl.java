@@ -97,8 +97,8 @@ public class MidiViewImpl implements IView {
    * @throws InvalidMidiDataException Throws an InvalidMidiDataException
    */
   public void playNote(int duration, int pitch, int instrument) throws InvalidMidiDataException {
-    MidiMessage start = new ShortMessage(ShortMessage.NOTE_ON, instrument, pitch, 64);
-    MidiMessage stop = new ShortMessage(ShortMessage.NOTE_OFF, instrument, pitch, 64);
+    MidiMessage start = new ShortMessage(ShortMessage.NOTE_ON, instrument, pitch, 100);
+    MidiMessage stop = new ShortMessage(ShortMessage.NOTE_OFF, instrument, pitch, 100);
     this.receiver.send(start, -1);
     this.receiver.send(stop, this.synth.getMicrosecondPosition() + (duration * tempo));
   }

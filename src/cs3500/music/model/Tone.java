@@ -18,7 +18,7 @@ public class Tone {
     }
     this.pitches = p;
     this.octave = octave;
-    this.numericTone = p.getScaleIndex() + (12 * octave);
+    this.numericTone = p.getScaleIndex() + (12 * octave) + 11;
   }
 
   public int getNumericTone() {
