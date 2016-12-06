@@ -10,6 +10,10 @@ import java.util.List;
 public class MusicEditorModel implements IModelTranslator {
   private final IMusicEditorModel song;
 
+  /**
+   * Constructs a music editor model that is compatible with the provider's code.
+   * @param song a song to be translated into the provider model
+   */
   public MusicEditorModel(IMusicEditorModel song) {
     this.song = song;
   }
@@ -25,7 +29,6 @@ public class MusicEditorModel implements IModelTranslator {
         }
       }
     }
-
     return notes;
   }
 

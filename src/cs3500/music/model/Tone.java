@@ -1,5 +1,8 @@
 package cs3500.music.model;
 
+/**
+ * Represents a Tone in the provider's model which consists of a pitch and an octave.
+ */
 public class Tone {
   private Pitches pitches;
   private int octave;
@@ -21,14 +24,26 @@ public class Tone {
     this.numericTone = p.getScaleIndex() + (12 * octave) + 11;
   }
 
+  /**
+   * Gets the number index corresponding with the tone.
+   * @return the number index corresponding with the tone
+   */
   public int getNumericTone() {
     return numericTone;
   }
 
+  /**
+   * Gets the pitch of the tone.
+   * @return the pitch of the tone
+   */
   public Pitches getPitch() {
     return pitches;
   }
 
+  /**
+   * Gets the octave of the tone.
+   * @return the octave of the tone
+   */
   public int getOctave() {
     return octave;
   }

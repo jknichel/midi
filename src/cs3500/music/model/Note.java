@@ -1,7 +1,7 @@
 package cs3500.music.model;
 
 /**
- * Represents a note from the providers model.
+ * Represents a note from the providers model that is created using a note from our model.
  */
 public class Note {
   private Tone tone;
@@ -22,18 +22,34 @@ public class Note {
     this.instrument = note.getInstrument();
   }
 
+  /**
+   * Gets the tone of the note.
+   * @return the tone of the note
+   */
   public Tone getTone() {
     return tone;
   }
 
+  /**
+   * Gets the starting beat of the note.
+   * @return teh starting beat for the note
+   */
   public int getBeat() {
     return beat;
   }
 
+  /**
+   * Gets the duration of the note.
+   * @return the duration of the note
+   */
   public int getDuration() {
     return duration;
   }
 
+  /**
+   * Gets the instrument that the note is played in.
+   * @return the number corresponding to the instrument that the note is being played in
+   */
   public int getInstrument() {
     return instrument;
   }

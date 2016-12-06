@@ -7,13 +7,29 @@ import java.util.List;
  * their view.
  */
 public interface IModelTranslator {
-  public List<Note> getNotes();
+  List<Note> getNotes();
 
-  public int getLastBeat();
+  /**
+   * Gets the last beat that is played in a song.
+   * @return the beat as a number that is the last one played in the song
+   */
+  int getLastBeat();
 
-  public Note getLowNote();
+  /**
+   * Gets the lowest note in a song based on pitch and octave.
+   * @return the lowest Note
+   */
+  Note getLowNote();
 
-  public Note getHighNote();
+  /**
+   * Gets the highest note in a song based on pitch and octave.
+   * @return the highest note
+   */
+  Note getHighNote();
 
-  public int getTempo();
+  /**
+   * Gets the tempo of a song.
+   * @return the tempos of a song
+   */
+  int getTempo();
 }
